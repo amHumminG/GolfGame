@@ -7,12 +7,10 @@ Course::Course(DirectX::XMINT3 bounds)
 
 void Course::initialize(DirectX::XMINT3 bounds)
 {
-	bool CheckMark = true;
 	Bounds = bounds;
 	hole.radius = 1;
 	//Location of the hole
 	randomizeHoleLocation();
-
 }
 
 void Course::randomizeHoleLocation()
