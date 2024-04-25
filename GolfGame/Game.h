@@ -1,0 +1,52 @@
+#pragma once
+
+#include "InputHandler.h"
+#include "OutputHandler.h"
+
+#include "Course.h"
+#include "Projectile.h"
+
+
+
+class Game
+{
+private:
+	
+	InputHandler input;
+	OutputHandler output;
+
+	Course course;
+	Projectile ball;
+
+	void startGame();
+	void swing();
+	void endGame();
+
+	void update();
+
+public:
+
+	Game();
+	Game
+	(
+		DirectX::XMINT3 courseBounds = { 1000, 0, 1000 },
+		DirectX::XMFLOAT3 startPos = { 0.0f, 0.0f, 0.0f },
+		float holeRadius = 1.0f,
+		unsigned int maxSpeed = 50,
+		float updateFrequency = 0.1f,
+		float gravity = 9.81f
+	);
+	~Game() = default;
+
+	void Initialize
+	(
+		DirectX::XMINT3 courseBounds = { 1000, 0, 1000 }, 
+		DirectX::XMFLOAT3 startPos = { 0.0f, 0.0f, 0.0f },
+		float holeRadius = 1.0f,
+		unsigned int maxSpeed = 50, 
+		float updateFrequency = 0.1f,
+		float gravity = 9.81f
+	);
+
+	void Run();
+};
