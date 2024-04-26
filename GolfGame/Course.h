@@ -1,6 +1,5 @@
 #pragma once
-#ifndef HeaderGuaurdCourse
-#define HeaderGuaurdCourse
+
 
 #include <DirectXMath.h>
 #include <iostream>
@@ -28,16 +27,20 @@ public:
 	Course(DirectX::XMINT3 Bounds);
 
 	void initialize(DirectX::XMINT3 Bounds);
-	
+
 
 	DirectX::XMFLOAT3 GetlocationHole();
 
-	DirectX::XMFLOAT3 SetlocationHole(DirectX::XMINT3 SizeOfHole);
+	DirectX::XMFLOAT3 SetlocationHole(DirectX::XMFLOAT3 NewLocationHole);
 
 	float GetradiusHole();
 
 	float SetradiusHole(float NewRadius);
-	
-};
 
-#endif
+
+	float GetBoundsHole();
+
+	float GetBoundsHole(float NewBounds);
+
+
+};

@@ -39,6 +39,7 @@ DirectX::XMFLOAT3 Course::GetlocationHole()
 	return hole.location;
 }
 
+
 DirectX::XMFLOAT3 Course::SetlocationHole(DirectX::XMFLOAT3 NewLocationHole)
 {
 	return hole.location = NewLocationHole;
@@ -54,3 +55,26 @@ float Course::SetradiusHole(float NewRadius)
 {
 	return hole.radius = NewRadius;
 }
+
+float Course::GetradiusHole()
+{
+	return hole.radius;
+}
+
+float Course::SetradiusHole(float NewRadius)
+{
+	return hole.radius = NewRadius;
+}
+
+
+float Course::GetBoundsHole()
+{
+	return Bounds;
+}
+
+float Course::GetBoundsHole(float NewBounds)
+{
+	return Bounds = NewBounds;
+}
+
+
