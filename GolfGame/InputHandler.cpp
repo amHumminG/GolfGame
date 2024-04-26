@@ -31,15 +31,35 @@ bool UserInput::validateFloatInput(std::string input)
     return true;
 }
 
+// Validates the input to ensure that it only contains numberic characters in the form of an integer
+bool UserInput::validateIntInput(std::string input)
+{
+	// length of 0 is invalid
+	if (input.length() == 0)
+		return false;
+
+	// Check each character to ensure it is a digit
+	for (int i = 0; i < input.length(); i++)
+	{
+		if (!isdigit(input[i]))
+			return false;
+	}
+
+	return true;
+}
+
 // Converts a string to a float
 float UserInput::convertToFloat(std::string input)
 {
     if (input.back() == '.')
 		input.pop_back();
 
-    std::cout << input << std::endl;
-
 	return std::stof(input);
+}
+
+int UserInput::convertToInt(std::string input)
+{
+	return std::stoi(input);
 }
 
 
@@ -83,4 +103,23 @@ bool UserInput::GetStartVelocity(DirectX::XMFLOAT3& startVelocity)
 
     startVelocity = DirectX::XMFLOAT3(arr[0], arr[1], arr[2]);
     return true;
+}
+
+bool UserInput::GetGravity(unsigned int& gravityIndex)
+{
+	// Get the input from the user
+	std::string input = RecieveInput();
+
+	// Validate and convert the input to an integer
+	if (!validateIntInput(input))
+		return false;
+
+	int value = convertToInt(input);
+
+	// Check if the value is within the valid range 1-5
+	if (value < 0 || value > 5)
+		return false;
+
+	gravityIndex = value;
+	return true;
 }

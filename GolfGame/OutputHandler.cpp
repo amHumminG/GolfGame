@@ -30,13 +30,34 @@ std::string OutputHandler::int3ToString(DirectX::XMINT3 int3)
 
 // PUBLIC FUNCTIONS
 
-void OutputHandler::GameStartMessage(DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity)
+void OutputHandler::SelectGravity()
+{
+	printNL("Please select gravity for the game: ");
+	printNL("1. 9.81 m/s^2 (Earth)");
+	printNL("2. 1.62 m/s^2 (Moon)");
+	printNL("3. 3.71 m/s^2 (Mars)");
+	printNL("4. 24.79 m/s^2 (Jupiter)");
+	printNL("5. 8.87 m/s^2 (Venus)");
+
+	print("Enter a number (1-5): ");
+}
+
+void OutputHandler::GameStartMessage()
 {
 	newLine();
 	printNL("------------- Welcome to Golf Game -------------");
+	// maybe write some instructions or description here
+}
+
+void OutputHandler::GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity)
+{
+	printNL("---------------------- GENERAL INFORMATION ----------------------");
+	printNL("Gravity is set to: " + std::to_string(gravity) + "m/s^2");
 	printNL("Hole is located at: " + int3ToString(holeLocation));
-	printNL("Total allowed starting velocity is " + std::to_string(maxStartVelocity) + "m/s or less");
+	printNL("Ball is located at: " + float3ToString(ballLocation));	
 	printNL("Par for this hole is: " + std::to_string(par));
+	printNL("Total allowed starting velocity for each shot is " + std::to_string(maxStartVelocity) + "m/s or less");
+	newLine();
 	printNL("Good luck!");
 	newLine();
 }
@@ -44,18 +65,50 @@ void OutputHandler::GameStartMessage(DirectX::XMINT3 holeLocation, unsigned int 
 void OutputHandler::GameEndMessage(unsigned int strokes, unsigned int par)
 {
 	newLine();
-	if (strokes > 1)
+	if (strokes == 1)
 	{
 		printNL("------------------------------------------------");
-		printNL("Congratulations! You have completed the hole in " + std::to_string(strokes) + " strokes.");
+		printNL("Hole in one!");
 		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("------------------------------------------------");
+	}
+	else if (strokes == par)
+	{
+		printNL("------------------------------------------------");
+		printNL("Par! Nicely done.");
+		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("------------------------------------------------");
+	}
+	else if (strokes < par)
+	{
+		printNL("------------------------------------------------");
+		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
+		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("Impressive.");
+		printNL("------------------------------------------------");
+	}
+	else if (strokes < par + 5)
+	{
+		printNL("------------------------------------------------");
+		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
+		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("Not even close buddy.");
+		printNL("------------------------------------------------");
+	}
+	else if (strokes < par + 10)
+	{
+		printNL("------------------------------------------------");
+		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
+		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("Next time, aim for the hole.");
 		printNL("------------------------------------------------");
 	}
 	else
 	{
 		printNL("------------------------------------------------");
-		printNL("Hole in one! Impressive.");
+		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
 		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("You should probably consider another hobby.");
 		printNL("------------------------------------------------");
 	}
 }
