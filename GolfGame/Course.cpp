@@ -34,13 +34,13 @@ int Course::RandomSize()
 }
 
 
-DirectX::XMFLOAT3 Course::GetlocationHole()
+DirectX::XMINT3 Course::GetlocationHole()
 {
 	return hole.location;
 }
 
 
-DirectX::XMFLOAT3 Course::SetlocationHole(DirectX::XMFLOAT3 NewLocationHole)
+DirectX::XMINT3 Course::SetlocationHole(DirectX::XMINT3 NewLocationHole)
 {
 	return hole.location = NewLocationHole;
 }
@@ -67,14 +67,14 @@ float Course::SetradiusHole(float NewRadius)
 }
 
 
-float Course::GetBoundsHole()
+DirectX::XMINT3 Course::GetBounds()
 {
-	return Bounds;
+	return this->Bounds;
 }
 
-float Course::GetBoundsHole(float NewBounds)
+void Course::SetBounds(DirectX::XMINT3 NewBounds)
 {
-	return Bounds = NewBounds;
+	this->Bounds = NewBounds;
 }
 
 

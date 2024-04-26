@@ -8,7 +8,7 @@
 
 struct Hole
 {
-	DirectX::XMFLOAT3 location;
+	DirectX::XMINT3 location;
 	float radius;
 };
 
@@ -29,18 +29,17 @@ public:
 	void initialize(DirectX::XMINT3 Bounds);
 
 
-	DirectX::XMFLOAT3 GetlocationHole();
+	DirectX::XMINT3 GetlocationHole();
 
-	DirectX::XMFLOAT3 SetlocationHole(DirectX::XMFLOAT3 NewLocationHole);
+	DirectX::XMINT3 SetlocationHole(DirectX::XMINT3 NewLocationHole);
 
 	float GetradiusHole();
 
 	float SetradiusHole(float NewRadius);
 
 
-	float GetBoundsHole();
-
-	float GetBoundsHole(float NewBounds);
+	DirectX::XMINT3 GetBounds();
+	void SetBounds(DirectX::XMINT3 newBounds);
 
 
 };
