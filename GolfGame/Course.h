@@ -17,6 +17,7 @@ class Course
 {
 private:
 	Hole hole;
+	unsigned int par;
 	DirectX::XMINT3 Bounds;
 	void randomizeHoleLocation();
 	int RandomSize();
@@ -40,6 +41,9 @@ public:
 
 	DirectX::XMINT3 GetBounds();
 	void SetBounds(DirectX::XMINT3 newBounds);
+
+	unsigned int GetPar();
+	void SetPar(unsigned int newPar);
 
 
 };

@@ -9,8 +9,8 @@ void Course::initialize(DirectX::XMINT3 bounds)
 {
 	Bounds = bounds;
 	hole.radius = 1;
-	//Location of the hole
 	randomizeHoleLocation();
+	SetPar(7); // change to dynamically change based on distance to hole
 }
 
 void Course::randomizeHoleLocation()
@@ -75,6 +75,16 @@ DirectX::XMINT3 Course::GetBounds()
 void Course::SetBounds(DirectX::XMINT3 NewBounds)
 {
 	this->Bounds = NewBounds;
+}
+
+unsigned int Course::GetPar()
+{
+	return this->par;
+}
+
+void Course::SetPar(unsigned int NewPar)
+{
+	this->par = NewPar;
 }
 
 
