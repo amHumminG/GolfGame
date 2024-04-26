@@ -27,7 +27,6 @@ private:
 
 	float maxBallSpeed;
 
-	void RepeatPlay();
 	void StartGame();
 	void Swing();
 	void EndGame(unsigned int strokes, unsigned int par);
@@ -57,4 +56,5 @@ public:
 	);
 
 	void Run();
+	void RepeatPlay();
 };

@@ -135,7 +135,7 @@ void OutputHandler::PreStrokeInfo(unsigned int stroke, DirectX::XMFLOAT3 ballLoc
 	print("Please enter starting velocity for your next stroke <x y z>: ");
 }
 
-void OutputHandler::InvalidInput()
+void OutputHandler::InvalidInputVelocity()
 {
 	print("Invalid input. Please enter a valid starting velocity <x y z>: ");
 }
@@ -151,4 +151,14 @@ void OutputHandler::BallInfo(float t, DirectX::XMFLOAT3 ballPosition, DirectX::X
 	print("Pos: " + float3ToString(ballPosition));
 	print("  ");
 	printNL("Speed: " + float3ToString(ballSpeed));
+}
+
+void OutputHandler::AskForReplay()
+{
+	print("Would you like to play again? (y/n): ");
+}
+
+void OutputHandler::ExitGameMessage()
+{
+	printNL("Exiting game. Thanks for playing!");
 }

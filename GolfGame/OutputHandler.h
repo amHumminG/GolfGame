@@ -27,10 +27,12 @@ public:
 	void GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity);
 	void GameEndMessage(unsigned int strokes, unsigned int par);
 	void BallOutOfBounds();
+	void AskForReplay();
+	void ExitGameMessage();
 
 	void PreStrokeInfo(unsigned int strokes, DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation);
 
-	void InvalidInput();
+	void InvalidInputVelocity();
 	void InvalidBallSpeed(float ballSpeed);
 
 	void BallInfo(float t, DirectX::XMFLOAT3 ballLocation, DirectX::XMFLOAT3 ballSpeed);

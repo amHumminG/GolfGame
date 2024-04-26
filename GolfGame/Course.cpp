@@ -56,16 +56,6 @@ float Course::SetradiusHole(float NewRadius)
 	return hole.radius = NewRadius;
 }
 
-float Course::GetradiusHole()
-{
-	return hole.radius;
-}
-
-float Course::SetradiusHole(float NewRadius)
-{
-	return hole.radius = NewRadius;
-}
-
 
 DirectX::XMINT3 Course::GetBounds()
 {

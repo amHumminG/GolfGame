@@ -2,19 +2,67 @@
 
 void Game::StartGame()
 {
+	this->output.GameStartMessage();
+	this ->output.SelectGravity();
 
+	// Set gravity
+	float gravity = 0;
+	unsigned int gravityChoice = 1; // Default to Earth gravity
+	bool validInput = false;
+	while (!validInput)
+	{
+		validInput = this->input.GetGravity(gravityChoice);
+	}
+
+	switch(gravityChoice)
+	{
+	case Gravity::EARTH:
+		gravity = 9.81f;
+		break;
+
+	case Gravity::MOON:
+		gravity = 1.62f;
+		break;
+
+	case Gravity::MARS:
+		gravity = 3.71f;
+		break;
+
+	case Gravity::JUPITER:
+		gravity = 24.79f;
+		break;
+
+	case Gravity::VENUS:
+		gravity = 8.87f;
+		break;
+	}
+
+	this->ball.SetGravity(gravity);
+
+	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetlocationHole(), this->course.GetPar(), this->maxBallSpeed, gravity);
 }
 
 void Game::Swing()
 {
+	this->output.PreStrokeInfo(0, this->ball.GetPosition(), this->course.GetlocationHole());
+
 	DirectX::XMFLOAT3 v0;
-	bool validShot = false;
-	while (!validShot)
+	bool validInput = false;
+	while (!validInput)
 	{
-		validShot = this->input.GetStartVelocity(v0);
-		if (!validShot);
+		validInput = this->input.GetStartVelocity(v0);
+
+		if (!validInput)
+			this->output.InvalidInputVelocity();
+		else
 		{
-			std::cout << "Invalid velocity!\n";
+			// determine if length of v0 is greater than maxBallSpeed
+			float length = pow(pow(v0.x, 2) + pow(v0.y, 2) + pow(v0.z, 2), 0.5f);
+			if (length > this->maxBallSpeed)
+			{
+				this->output.InvalidBallSpeed(length);
+				validInput = false;
+			}
 		}
 	}
 
@@ -35,7 +83,7 @@ void Game::Swing()
 bool Game::BallInHole()
 {
 	DirectX::XMFLOAT3 ballPos = ball.GetPosition();
-	DirectX::XMFLOAT3 holePos = course.GetlocationHole();
+	DirectX::XMINT3 holePos = course.GetlocationHole();
 
 	DirectX::XMFLOAT3 ballToHole = { ballPos.x - holePos.x, ballPos.y - holePos.y, ballPos.z - holePos.z };
 
@@ -78,13 +126,22 @@ void Game::EndGame(unsigned int strokes, unsigned int par)
 
 void Game::RepeatPlay()
 {
-	//Ask player if he want to repeat the game
+	this->output.AskForReplay();
+	bool replay;
+	bool validInput = false;
+	while (!validInput)
+	{
+		validInput = this->input.GetYesOrNo(replay);
+	}
 
-	// if true
-	//Start the game (start the beginning screen);
-
-	//else;
-	//thanks for playing (close the screen)
+	if (replay)
+	{
+		Run();
+	}
+	else
+	{
+		this->output.ExitGameMessage();
+	}
 }
 
 void Game::Run()
