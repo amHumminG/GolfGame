@@ -10,7 +10,9 @@ private:
 
 	std::string RecieveInput();
 	bool validateFloatInput(std::string input);
+	bool validateIntInput(std::string input);
 	float convertToFloat(std::string input);
+	int convertToInt(std::string input);
 
 public:
 
@@ -18,4 +20,5 @@ public:
 	~UserInput() = default;
 
 	bool GetStartVelocity(DirectX::XMFLOAT3& startVelocity);
+	bool GetGravity(unsigned int& gravityIndex);
 };
