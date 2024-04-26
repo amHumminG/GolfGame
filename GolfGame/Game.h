@@ -33,8 +33,7 @@ public:
 		DirectX::XMFLOAT3 startPos = { 0.0f, 0.0f, 0.0f },
 		float holeRadius = 1.0f,
 		unsigned int maxSpeed = 50,
-		float updateFrequency = 0.1f,
-		float gravity = 9.81f
+		float updateFrequency = 0.1f
 	);
 	~Game() = default;
 
@@ -44,8 +43,7 @@ public:
 		DirectX::XMFLOAT3 startPos = { 0.0f, 0.0f, 0.0f },
 		float holeRadius = 1.0f,
 		unsigned int maxSpeed = 50, 
-		float updateFrequency = 0.1f,
-		float gravity = 9.81f
+		float updateFrequency = 0.1f
 	);
 
 	void Run();

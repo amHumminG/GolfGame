@@ -5,12 +5,12 @@ Game::Game()
 	Initialize();
 }
 
-Game::Game(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency, float gravity)
+Game::Game(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency)
 {
-	Initialize(courseBounds, startPos, holeRadius, maxSpeed, updateFrequency, gravity);
+	Initialize(courseBounds, startPos, holeRadius, maxSpeed, updateFrequency);
 }
 
-void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency, float gravity)
+void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency)
 {
 	this->input = InputHandler();
 	this->output = OutputHandler();
