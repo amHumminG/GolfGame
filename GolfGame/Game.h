@@ -28,7 +28,7 @@ private:
 	float maxBallSpeed;
 
 	void StartGame();
-	void Swing();
+	void Swing(unsigned int strokes);
 	void EndGame(unsigned int strokes, unsigned int par);
 
 	bool BallInHole();

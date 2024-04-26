@@ -42,9 +42,9 @@ void Game::StartGame()
 	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetlocationHole(), this->course.GetPar(), this->maxBallSpeed, gravity);
 }
 
-void Game::Swing()
+void Game::Swing(unsigned int strokes)
 {
-	this->output.PreStrokeInfo(0, this->ball.GetPosition(), this->course.GetlocationHole());
+	this->output.PreStrokeInfo(strokes, this->ball.GetPosition(), this->course.GetlocationHole());
 
 	DirectX::XMFLOAT3 v0;
 	bool validInput = false;
@@ -56,7 +56,7 @@ void Game::Swing()
 			this->output.InvalidInputVelocity();
 		else
 		{
-			// determine if length of v0 is greater than maxBallSpeed
+			// Determine if length of v0 is greater than maxBallSpeed
 			float length = pow(pow(v0.x, 2) + pow(v0.y, 2) + pow(v0.z, 2), 0.5f);
 			if (length > this->maxBallSpeed)
 			{
@@ -66,14 +66,17 @@ void Game::Swing()
 		}
 	}
 
-	while (this->ball.GetPosition().y >= 0.0f)
+	bool ballHit = false;
+	this->ball.SetVelocity(v0);
+	this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
+	while (this->ball.GetPosition().y > 0.0f || !ballHit)
 	{
 		// Set ball velocity and calculate its projectile
-		this->ball.SetVelocity(v0);
 		this->ball.CalculateProjectile();
 		
 		// Print ball information
 		this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
+		ballHit = true;
 	}
 	
 	// Updates the ball start position
@@ -152,7 +155,7 @@ void Game::Run()
 
 	while (!this->BallInHole())
 	{
-		Swing();
+		Swing(strokes);
 		strokes++;
 	}
 
