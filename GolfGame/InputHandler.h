@@ -9,8 +9,11 @@ class InputHandler
 private:
 
 	std::string ReadInput();
+	bool validateCharInput(std::string input);
 	bool validateFloatInput(std::string input);
 	bool validateIntInput(std::string input);
+
+	char convertToChar(std::string input);
 	float convertToFloat(std::string input);
 	int convertToInt(std::string input);
 
@@ -21,4 +24,5 @@ public:
 
 	bool GetStartVelocity(DirectX::XMFLOAT3& startVelocity);
 	bool GetGravity(unsigned int& gravityIndex);
+	bool GetYesOrNo(bool& question);
 };

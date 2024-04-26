@@ -10,6 +10,22 @@ std::string InputHandler::ReadInput()
     return input;
 }
 
+bool InputHandler::validateCharInput(std::string input)
+{
+	// length of 0 is invalid
+	if (input.length() == 0)
+		return false;
+
+	// Check each character to ensure it is a character from a-z
+	for (int i = 0; i < input.length(); i++)
+	{
+		if (!isalpha(input[i]))
+			return false;
+	}
+
+	return true;
+}
+
 // Validates the input to ensure that it only contains numberic characters in the form of a float
 bool InputHandler::validateFloatInput(std::string input)
 {
@@ -32,7 +48,7 @@ bool InputHandler::validateFloatInput(std::string input)
 }
 
 // Validates the input to ensure that it only contains numberic characters in the form of an integer
-bool UserInput::validateIntInput(std::string input)
+bool InputHandler::validateIntInput(std::string input)
 {
 	// length of 0 is invalid
 	if (input.length() == 0)
@@ -48,6 +64,12 @@ bool UserInput::validateIntInput(std::string input)
 	return true;
 }
 
+// Converts a string with length 1 to a char
+char InputHandler::convertToChar(std::string input)
+{
+	return input[0];
+}
+
 // Converts a string to a float
 float InputHandler::convertToFloat(std::string input)
 {
@@ -57,7 +79,7 @@ float InputHandler::convertToFloat(std::string input)
 	return std::stof(input);
 }
 
-int UserInput::convertToInt(std::string input)
+int InputHandler::convertToInt(std::string input)
 {
 	return std::stoi(input);
 }
@@ -72,7 +94,6 @@ bool InputHandler::GetStartVelocity(DirectX::XMFLOAT3& startVelocity)
     float arr[3] = { 0.0f, 0.0f, 0.0f };
     unsigned int arrSize = 0;
 
-    // Get the input from the user
     std::string input = ReadInput();
 
     // Validate and convert the input to float values
@@ -105,12 +126,10 @@ bool InputHandler::GetStartVelocity(DirectX::XMFLOAT3& startVelocity)
     return true;
 }
 
-bool UserInput::GetGravity(unsigned int& gravityIndex)
+bool InputHandler::GetGravity(unsigned int& gravityIndex)
 {
-	// Get the input from the user
-	std::string input = RecieveInput();
+	std::string input = ReadInput();
 
-	// Validate and convert the input to an integer
 	if (!validateIntInput(input))
 		return false;
 
@@ -122,4 +141,34 @@ bool UserInput::GetGravity(unsigned int& gravityIndex)
 
 	gravityIndex = value;
 	return true;
+}
+
+// Obtains a yes or no answer from the input stream (true for yes, false for no)
+bool InputHandler::GetYesOrNo(bool& answer)
+{
+	std::string input = ReadInput();
+
+	if (!validateCharInput(input))
+		return false;
+
+	// Check if the string contains more than one character
+	if (input.length() > 1)
+		return false;
+
+	// if the character is y or Y, answer is true
+	if (convertToChar(input) == 'y' || convertToChar(input) == 'Y');
+	{
+		answer = true;
+		return true;
+	}
+	
+	// if the character is n or N, answer is false
+	if (convertToChar(input) == 'n' || convertToChar(input) == 'N')
+	{
+		answer = false;
+		return true;
+	}
+
+	// if the character is not y, Y, n, or N, the input is invalid
+	return false;
 }
