@@ -26,9 +26,10 @@ private:
 	Course course;
 	Projectile ball;
 
+	void RepeatPlay()
 	void StartGame();
 	void Swing();
-	void EndGame();
+	void EndGame(unsigned int strokes, unsigned int par);
 
 	bool BallInHole();
 
