@@ -4,18 +4,18 @@
 #include <string>
 #include "DirectXMath.h"
 
-class UserInput
+class InputHandler
 {
 private:
 
-	std::string RecieveInput();
+	std::string ReadInput();
 	bool validateFloatInput(std::string input);
 	float convertToFloat(std::string input);
 
 public:
 
-	UserInput() = default;
-	~UserInput() = default;
+	InputHandler() = default;
+	~InputHandler() = default;
 
 	bool GetStartVelocity(DirectX::XMFLOAT3& startVelocity);
 };
