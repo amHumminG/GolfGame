@@ -72,9 +72,9 @@ void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, 
 	// Where do we set max ball speed?
 }
 
-void Game::endGame(unsigned int strokes, unsigned int par)
+void Game::EndGame(unsigned int strokes, unsigned int par)
 {
-	GameEndMessage(strokes, par);
+	this->output.GameEndMessage(strokes, par);
 }
 
 void Game::RepeatPlay(std::string Yes, std::string No)
