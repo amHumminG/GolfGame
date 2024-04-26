@@ -20,7 +20,10 @@ public:
 	OutputHandler() = default;
 	~OutputHandler() = default;
 
-	void GameStartMessage(DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity);
+	void SelectGravity();
+
+	void GameStartMessage();
+	void GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity);
 	void GameEndMessage(unsigned int strokes, unsigned int par);
 	void BallOutOfBounds();
 
