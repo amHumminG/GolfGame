@@ -42,6 +42,11 @@ void OutputHandler::SelectGravity()
 	print("Enter a number (1-5): ");
 }
 
+void OutputHandler::InvalidGravity()
+{
+	print("Invalid gravity. Please enter a valid number (1-5): ");
+}
+
 void OutputHandler::GameStartMessage()
 {
 	newLine();

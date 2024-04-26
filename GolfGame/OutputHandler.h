@@ -21,6 +21,7 @@ public:
 	~OutputHandler() = default;
 
 	void SelectGravity();
+	void InvalidGravity();
 
 	void GameStartMessage();
 	void GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity);
