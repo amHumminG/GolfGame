@@ -18,11 +18,12 @@ private:
 	Course course;
 	Projectile ball;
 
+
 	void startGame();
 	void swing();
-	void endGame();
-
+	void endGame(unsigned int strokes, unsigned int par);
 	void update();
+	void RepeatPlay()
 
 public:
 
