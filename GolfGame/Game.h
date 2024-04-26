@@ -6,7 +6,15 @@
 #include "Course.h"
 #include "Projectile.h"
 
-
+enum Gravity
+{
+	Earth = 1,
+	Moon = 2,
+	Mars = 3,
+	Jupiter = 4,
+	Venus = 5
+	// Custom
+};
 
 class Game
 {
@@ -18,12 +26,12 @@ private:
 	Course course;
 	Projectile ball;
 
-
-	void startGame();
-	void swing();
-	void endGame(unsigned int strokes, unsigned int par);
-	void update();
 	void RepeatPlay()
+	void StartGame();
+	void Swing();
+	void EndGame(unsigned int strokes, unsigned int par);
+
+	bool BallInHole();
 
 public:
 
