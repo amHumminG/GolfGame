@@ -9,9 +9,12 @@ private:
 	DirectX::XMFLOAT3 pos = { 0.0f, 0.0f, 0.0f }; // Current position of the ball
 	DirectX::XMFLOAT3 v0 = { 0.0f, 0.0f, 0.0f }; // Initial velocity of the ball
 	DirectX::XMFLOAT3 v = { 0.0f, 0.0f, 0.0f }; // Current velocity of the ball
+	float gravity = 9.82f;
 	float t = 0.0f; // Current time of the projectile
 
 	float iteration = 0.1f; // Update frequency
+
+	void ResetTime();
 
 public:
 	Projectile() = default;
