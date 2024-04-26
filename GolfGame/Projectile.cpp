@@ -1,40 +1,55 @@
 #include "Projectile.h"
 
+void Projectile::ResetTime()
+{
+	this->t = 0.0f;
+}
+
 void Projectile::CalculateProjectile()
 {
 	t += iteration;
 
 	// Position
 	pos.x = v0.x * t + pos0.x;
-	pos.y = v0.y * t - ((9.82f * pow(t, 2)) / 2) + pos0.y;
+	pos.y = v0.y * t - ((gravity * pow(t, 2)) / 2) + pos0.y;
 	pos.z = v0.z * t + pos0.z;
 
 	// Velocity
 	v.x = v0.x;
-	v.y = v0.y - 9.82f * t; // Calculate the new vy after the time t
+	v.y = v0.y - gravity * t; // Calculate the new vy after the time t
 	v.z = v0.z;
 
 	if (pos.y <= 0) // If pos.y <= 0, calculate velocity and position when the ball is exactly at y = 0
 	{
-		float timeAtY0 = v0.y / (9.82 / 2);
-		t = timeAtY0;
+		t = v0.y / (gravity / 2);
 
 		pos.x = v0.x * t + pos0.x;
 		pos.y = 0.0f;
 		pos.z = v0.z * t + pos0.z;
 
-		v.y = v0.y - 9.82f * t;
+		v.y = v0.y - gravity * t;
 	}
 }
 
 void Projectile::SetVelocity(DirectX::XMFLOAT3 v0)
 {
+	this->ResetTime();
 	this->v0 = v0;
 }
 
 void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
 {
 	this->pos0 = pos0;
+}
+
+void Projectile::SetGravity(float gravity)
+{
+	this->gravity = gravity;
+}
+
+void Projectile::SetUpdateFrequency(float iteration)
+{
+	this->iteration = iteration;
 }
 
 DirectX::XMFLOAT3 Projectile::GetPosition()

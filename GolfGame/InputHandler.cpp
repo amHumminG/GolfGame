@@ -2,7 +2,7 @@
 
 // PRIVATE FUNCTIONS
 
-std::string UserInput::RecieveInput()
+std::string InputHandler::ReadInput()
 {
     std::string input;
     std::getline(std::cin, input);
@@ -11,7 +11,7 @@ std::string UserInput::RecieveInput()
 }
 
 // Validates the input to ensure that it only contains numberic characters in the form of a float
-bool UserInput::validateFloatInput(std::string input)
+bool InputHandler::validateFloatInput(std::string input)
 {
     // length of 0 is invalid
     if (input.length() == 0)
@@ -49,7 +49,7 @@ bool UserInput::validateIntInput(std::string input)
 }
 
 // Converts a string to a float
-float UserInput::convertToFloat(std::string input)
+float InputHandler::convertToFloat(std::string input)
 {
     if (input.back() == '.')
 		input.pop_back();
@@ -67,13 +67,13 @@ int UserInput::convertToInt(std::string input)
 // PUBLIC FUNCTIONS
 
 // Obtains the start velocity vector from the input stream
-bool UserInput::GetStartVelocity(DirectX::XMFLOAT3& startVelocity)
+bool InputHandler::GetStartVelocity(DirectX::XMFLOAT3& startVelocity)
 {
     float arr[3] = { 0.0f, 0.0f, 0.0f };
     unsigned int arrSize = 0;
 
     // Get the input from the user
-    std::string input = RecieveInput();
+    std::string input = ReadInput();
 
     // Validate and convert the input to float values
     std::string num;

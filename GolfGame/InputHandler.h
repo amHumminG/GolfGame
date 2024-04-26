@@ -4,11 +4,11 @@
 #include <string>
 #include "DirectXMath.h"
 
-class UserInput
+class InputHandler
 {
 private:
 
-	std::string RecieveInput();
+	std::string ReadInput();
 	bool validateFloatInput(std::string input);
 	bool validateIntInput(std::string input);
 	float convertToFloat(std::string input);
@@ -16,8 +16,8 @@ private:
 
 public:
 
-	UserInput() = default;
-	~UserInput() = default;
+	InputHandler() = default;
+	~InputHandler() = default;
 
 	bool GetStartVelocity(DirectX::XMFLOAT3& startVelocity);
 	bool GetGravity(unsigned int& gravityIndex);
