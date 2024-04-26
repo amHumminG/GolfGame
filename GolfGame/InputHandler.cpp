@@ -40,7 +40,7 @@ bool InputHandler::validateFloatInput(std::string input)
     // Check each character to ensure it is a digit or a decimal point
     for (int i = 0; i < input.length(); i++)
     {
-		if (!isdigit(input[i]) && input[i] != '.')
+		if (!isdigit(input[i]) && input[i] != '.' && input[i] != '-')
 			return false;
 	}
 
@@ -57,7 +57,7 @@ bool InputHandler::validateIntInput(std::string input)
 	// Check each character to ensure it is a digit
 	for (int i = 0; i < input.length(); i++)
 	{
-		if (!isdigit(input[i]))
+		if (!isdigit(input[i]) && input[i] != '-')
 			return false;
 	}
 
