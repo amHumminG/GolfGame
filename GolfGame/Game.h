@@ -8,12 +8,11 @@
 
 enum Gravity
 {
-	Earth = 1,
-	Moon = 2,
-	Mars = 3,
-	Jupiter = 4,
-	Venus = 5
-	// Custom
+	EARTH = 1,
+	MOON = 2,
+	MARS = 3,
+	JUPITER = 4,
+	VENUS = 5
 };
 
 class Game
@@ -26,7 +25,9 @@ private:
 	Course course;
 	Projectile ball;
 
-	void RepeatPlay()
+	float maxBallSpeed;
+
+	void RepeatPlay();
 	void StartGame();
 	void Swing();
 	void EndGame(unsigned int strokes, unsigned int par);

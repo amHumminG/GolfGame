@@ -68,8 +68,7 @@ void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, 
 	this->ball.SetPosition(startPos);
 	this->ball.SetUpdateFrequency(updateFrequency);
 
-
-	// Where do we set max ball speed?
+	this->maxBallSpeed = maxSpeed;
 }
 
 void Game::EndGame(unsigned int strokes, unsigned int par)
@@ -77,7 +76,7 @@ void Game::EndGame(unsigned int strokes, unsigned int par)
 	this->output.GameEndMessage(strokes, par);
 }
 
-void Game::RepeatPlay(std::string Yes, std::string No)
+void Game::RepeatPlay()
 {
 	//Ask player if he want to repeat the game
 
@@ -91,13 +90,14 @@ void Game::RepeatPlay(std::string Yes, std::string No)
 void Game::Run()
 {
 	StartGame();
+	unsigned int strokes = 0;
+	unsigned int par = 7; // this->course.GetPar();
 
-	while (this->BallInHole())
+	while (!this->BallInHole())
 	{
 		Swing();
+		strokes++;
 	}
 
-	EndGame();
-
-	// maybe add a play again option?
+	EndGame(strokes, par);
 }
