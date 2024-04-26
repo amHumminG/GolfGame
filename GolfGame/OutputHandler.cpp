@@ -148,8 +148,9 @@ void OutputHandler::InvalidBallSpeed(float ballSpeed)
 void OutputHandler::BallInfo(float t, DirectX::XMFLOAT3 ballPosition, DirectX::XMFLOAT3 ballSpeed)
 {
 	print("t = " + std::to_string(t));
+	print(" | ");
 	print("Pos: " + float3ToString(ballPosition));
-	print("  ");
+	print(" | ");
 	printNL("Speed: " + float3ToString(ballSpeed));
 }
 
