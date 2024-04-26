@@ -42,6 +42,16 @@ void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
 	this->pos0 = pos0;
 }
 
+void Projectile::SetGravity(float gravity)
+{
+	this->gravity = gravity;
+}
+
+void Projectile::SetUpdateFrequency(float iteration)
+{
+	this->iteration = iteration;
+}
+
 DirectX::XMFLOAT3 Projectile::GetPosition()
 {
 	return this->pos;
