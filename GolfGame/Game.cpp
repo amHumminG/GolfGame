@@ -12,6 +12,8 @@ void Game::StartGame()
 	while (!validInput)
 	{
 		validInput = this->input.GetGravity(gravityChoice);
+		if (!validInput)
+			this->output.InvalidGravity();
 	}
 
 	switch(gravityChoice)
