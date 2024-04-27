@@ -1,5 +1,5 @@
 #include "Course.h"
-
+#include <random>
 Course::Course(DirectX::XMINT3 bounds)
 {
 	initialize(bounds);
@@ -29,8 +29,10 @@ void Course::randomizeHoleLocation()
 
 int Course::RandomSize()
 {
-	int Result = rand() % 300 + 100;
-	return Result;
+	std::random_device RandomDevice;
+	std::uniform_int_distribution<> RandomNum(100, 300);
+	int randomNumber = RandomNum(RandomDevice);
+	return randomNumber;
 }
 
 
