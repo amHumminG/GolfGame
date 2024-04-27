@@ -136,7 +136,7 @@ bool InputHandler::GetGravity(unsigned int& gravityIndex)
 	int value = convertToInt(input);
 
 	// Check if the value is within the valid range 1-5
-	if (value < 0 || value > 5)
+	if (value < 1 || value > 5)
 		return false;
 
 	gravityIndex = value;
