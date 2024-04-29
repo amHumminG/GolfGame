@@ -19,7 +19,7 @@ private:
 	Hole hole;
 	unsigned int par;
 	DirectX::XMINT3 Bounds;
-	void randomizeHoleLocation();
+
 	int RandomSize();
 
 public:
@@ -29,7 +29,7 @@ public:
 
 	void initialize(DirectX::XMINT3 Bounds);
 
-
+	void randomizeHoleLocation();
 	DirectX::XMINT3 GetlocationHole();
 
 	DirectX::XMINT3 SetlocationHole(DirectX::XMINT3 NewLocationHole);

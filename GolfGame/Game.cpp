@@ -1,7 +1,15 @@
 #include "Game.h"
 
+void Game::SetupGame()
+{
+	this->ball.SetPosition({ 0.0f, 0.0f, 0.0f });
+	this->course.randomizeHoleLocation();
+}
+
 void Game::StartGame()
 {
+	SetupGame();
+
 	this->output.GameStartMessage();
 	this ->output.SelectGravity();
 
