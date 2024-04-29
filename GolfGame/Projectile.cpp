@@ -5,6 +5,12 @@ void Projectile::ResetTime()
 	this->t = 0.0f;
 }
 
+void Projectile::Initialize(float updateFrequency, Gravity g)
+{
+	this->iteration = iteration;
+	SetGravity(g);
+}
+
 void Projectile::CalculateProjectile()
 {
 	t += iteration;
@@ -42,9 +48,30 @@ void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
 	this->pos0 = pos0;
 }
 
-void Projectile::SetGravity(float gravity)
+void Projectile::SetGravity(Gravity g)
 {
-	this->gravity = gravity;
+	switch (g)
+	{
+	case Gravity::EARTH:
+		this->gravity = 9.81f;
+		break;
+
+	case Gravity::MOON:
+		this->gravity = 1.62f;
+		break;
+
+	case Gravity::MARS:
+		this->gravity = 3.71f;
+		break;
+
+	case Gravity::JUPITER:
+		this->gravity = 24.79f;
+		break;
+
+	case Gravity::VENUS:
+		this->gravity = 8.87f;
+		break;
+	}
 }
 
 void Projectile::SetUpdateFrequency(float iteration)
@@ -70,4 +97,9 @@ float Projectile::GetTotalVelocity()
 float Projectile::GetTime()
 {
 	return this->t;
+}
+
+float Projectile::GetGravity()
+{
+	return this->gravity;
 }
