@@ -23,33 +23,10 @@ void Game::StartGame()
 		if (!validInput)
 			this->output.InvalidGravity();
 	}
+	// cast gravityChoice to enum
+	this->ball.SetGravity(static_cast<Gravity>(gravityChoice));
 
-	switch(gravityChoice)
-	{
-	case Gravity::EARTH:
-		gravity = 9.81f;
-		break;
-
-	case Gravity::MOON:
-		gravity = 1.62f;
-		break;
-
-	case Gravity::MARS:
-		gravity = 3.71f;
-		break;
-
-	case Gravity::JUPITER:
-		gravity = 24.79f;
-		break;
-
-	case Gravity::VENUS:
-		gravity = 8.87f;
-		break;
-	}
-
-	this->ball.SetGravity(gravity);
-
-	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetlocationHole(), this->course.GetPar(), this->maxBallSpeed, gravity);
+	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetlocationHole(), this->course.GetPar(), this->maxBallSpeed, this->ball.GetGravity());
 }
 
 void Game::Swing(unsigned int strokes)

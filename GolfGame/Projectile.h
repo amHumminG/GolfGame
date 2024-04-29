@@ -2,6 +2,15 @@
 
 #include <DirectXMath.h>
 
+enum Gravity
+{
+	EARTH = 1,
+	MOON = 2,
+	MARS = 3,
+	JUPITER = 4,
+	VENUS = 5
+};
+
 class Projectile
 {
 private:
@@ -20,17 +29,20 @@ public:
 	Projectile() = default;
 	~Projectile() = default;
 
+	void Initialize(float updateFrequency, Gravity gravity);
+
 	void CalculateProjectile();
 
 	void SetVelocity(DirectX::XMFLOAT3 v0);
 	void SetPosition(DirectX::XMFLOAT3 pos0);
-	void SetGravity(float gravity);
+	void SetGravity(Gravity g);
 	void SetUpdateFrequency(float iteration);
 
 	DirectX::XMFLOAT3 GetPosition();
 	DirectX::XMFLOAT3 GetVelocity();
 	float GetTotalVelocity();
 	float GetTime();
+	float GetGravity();
 };
 
 // SetVelocity() and SetPosition() needs to be called on every new shot
