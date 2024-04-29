@@ -1,77 +1,86 @@
 #include "Course.h"
-#include <random>
+
+// Returns a random integer between min and max
+int Course::RandomInRange(int min, int max)
+{
+	std::random_device RandomDevice;
+	std::uniform_int_distribution<> RandomNum(min, max);
+	int randomNumber = RandomNum(RandomDevice);
+	return randomNumber;
+}
+
+// Adds one to the par for every increment of distance between the ball and the hole
+unsigned int Course::CalculatePar(unsigned int Increment)
+{
+	// Calculate the distance between 0,0,0 ball and the hole
+	int distance = sqrt(pow((this->hole.location.x + this->hole.location.z), 2));
+	return distance / Increment;
+}
+
+// Generates a hole with a random location and radius
+void Course::GenerateHole(int minDistanceToHole, int maxDistanceToHole, float holeRadius, unsigned int parIncrement)
+{
+	RandomizeHoleLocation(minDistanceToHole, maxDistanceToHole);
+	SetHoleRadius(1);
+	SetPar(CalculatePar(parIncrement));
+}
+
 Course::Course(DirectX::XMINT3 bounds)
 {
 	initialize(bounds);
 }
 
-void Course::initialize(DirectX::XMINT3 bounds)
+void Course::initialize(DirectX::XMINT3 initialBounds)
 {
-	Bounds = bounds;
-	hole.radius = 1;
-	randomizeHoleLocation();
-	SetPar(7); // change to dynamically change based on distance to hole
+	SetBounds(initialBounds);
+	GenerateHole(100, 400, 1, 50);
 }
 
-void Course::randomizeHoleLocation()
+// Randomizes the location of the hole
+void Course::RandomizeHoleLocation(int min, int max)
 {
-	//Random position in x 
-	int locationX = RandomSize();
+	int locationX = RandomInRange(min, max);
+	int locationY = 0;
+	int locationZ = RandomInRange(min, max);
+
 	hole.location.x = locationX;
-
-	//Random position in y 
-	hole.location.y = 0;
-
-	//Random position in z 
-	int locationZ = RandomSize();
+	hole.location.y = locationY;
 	hole.location.z = locationZ;
 }
 
-int Course::RandomSize()
-{
-	std::random_device RandomDevice;
-	std::uniform_int_distribution<> RandomNum(100, 300);
-	int randomNumber = RandomNum(RandomDevice);
-	return randomNumber;
-}
-
-
-DirectX::XMINT3 Course::GetlocationHole()
-{
-	return hole.location;
-}
-
-
-DirectX::XMINT3 Course::SetlocationHole(DirectX::XMINT3 NewLocationHole)
-{
-	return hole.location = NewLocationHole;
-}
-
-
-float Course::GetradiusHole()
-{
-	return hole.radius;
-}
-
-float Course::SetradiusHole(float NewRadius)
-{
-	return hole.radius = NewRadius;
-}
-
-
 DirectX::XMINT3 Course::GetBounds()
 {
-	return this->Bounds;
+	return this->bounds;
 }
 
-void Course::SetBounds(DirectX::XMINT3 NewBounds)
+DirectX::XMINT3 Course::GetHoleLocation()
 {
-	this->Bounds = NewBounds;
+	return this->hole.location;
+}
+
+float Course::GetHoleRadius()
+{
+	return this->hole.radius;
 }
 
 unsigned int Course::GetPar()
 {
 	return this->par;
+}
+
+void Course::SetBounds(DirectX::XMINT3 NewBounds)
+{
+	this->bounds = NewBounds;
+}
+
+void Course::SetHoleLocation(DirectX::XMINT3 NewLocation)
+{
+	this->hole.location = NewLocation;
+}
+
+void Course::SetHoleRadius(float NewRadius)
+{
+	this->hole.radius = NewRadius;
 }
 
 void Course::SetPar(unsigned int NewPar)

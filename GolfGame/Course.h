@@ -1,9 +1,7 @@
 #pragma once
 
-
 #include <DirectXMath.h>
-#include <iostream>
-#include <stdlib.h>
+#include <random>
 
 
 struct Hole
@@ -18,32 +16,27 @@ class Course
 private:
 	Hole hole;
 	unsigned int par;
-	DirectX::XMINT3 Bounds;
+	DirectX::XMINT3 bounds;
 
-	int RandomSize();
+	int RandomInRange(int min, int max);
+	void RandomizeHoleLocation(int min, int max);
+	unsigned int CalculatePar(unsigned int increment);
 
 public:
 
 	Course() = default;
-	Course(DirectX::XMINT3 Bounds);
+	Course(DirectX::XMINT3 bounds);
 
-	void initialize(DirectX::XMINT3 Bounds);
-
-	void randomizeHoleLocation();
-	DirectX::XMINT3 GetlocationHole();
-
-	DirectX::XMINT3 SetlocationHole(DirectX::XMINT3 NewLocationHole);
-
-	float GetradiusHole();
-
-	float SetradiusHole(float NewRadius);
-
+	void initialize(DirectX::XMINT3 bounds);
+	void GenerateHole(int minDistanceToHole, int maxDistanceToHole, float holeRadius, unsigned int parIncrement);
 
 	DirectX::XMINT3 GetBounds();
-	void SetBounds(DirectX::XMINT3 newBounds);
-
+	DirectX::XMINT3 GetHoleLocation();
+	float GetHoleRadius();
 	unsigned int GetPar();
+
+	void SetBounds(DirectX::XMINT3 newBounds);
+	void SetHoleLocation(DirectX::XMINT3 newLocation);
+	void SetHoleRadius(float newRadius);
 	void SetPar(unsigned int newPar);
-
-
 };
