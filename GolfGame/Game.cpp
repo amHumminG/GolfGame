@@ -3,7 +3,7 @@
 void Game::SetupGame()
 {
 	this->ball.SetPosition({ 0.0f, 0.0f, 0.0f });
-	this->course.randomizeHoleLocation();
+	this->course.GenerateHole(100, 400, 1, 50);
 }
 
 void Game::StartGame()
@@ -26,12 +26,12 @@ void Game::StartGame()
 	// cast gravityChoice to enum
 	this->ball.SetGravity(static_cast<Gravity>(gravityChoice));
 
-	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetlocationHole(), this->course.GetPar(), this->maxBallSpeed, this->ball.GetGravity());
+	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetHoleLocation(), this->course.GetPar(), this->maxBallSpeed, this->ball.GetGravity());
 }
 
 void Game::Swing(unsigned int strokes)
 {
-	this->output.PreStrokeInfo(strokes, this->ball.GetPosition(), this->course.GetlocationHole());
+	this->output.PreStrokeInfo(strokes, this->ball.GetPosition(), this->course.GetHoleLocation());
 
 	DirectX::XMFLOAT3 v0;
 	bool validInput = false;
@@ -73,12 +73,12 @@ void Game::Swing(unsigned int strokes)
 bool Game::BallInHole()
 {
 	DirectX::XMFLOAT3 ballPos = ball.GetPosition();
-	DirectX::XMINT3 holePos = course.GetlocationHole();
+	DirectX::XMINT3 holePos = course.GetHoleLocation();
 
 	DirectX::XMFLOAT3 ballToHole = { ballPos.x - holePos.x, ballPos.y - holePos.y, ballPos.z - holePos.z };
 
 	float length = pow(pow(ballToHole.x, 2) + pow(ballToHole.y, 2) + pow(ballToHole.z, 2), 0.5f);
-	float holeRadius = this->course.GetradiusHole();
+	float holeRadius = this->course.GetHoleRadius();
 
 	return length <= holeRadius;
 }
