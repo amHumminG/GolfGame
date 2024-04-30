@@ -105,13 +105,13 @@ DirectX::XMFLOAT3 Wind::GetSpeed()
 }
 
 // Applies the wind speed to a velocity v and returns the new velocity u
-DirectX::XMFLOAT3 Wind::ApplyWind(DirectX::XMFLOAT3 v)
+DirectX::XMFLOAT3 Wind::GetDragVelocity(DirectX::XMFLOAT3 v)
 {
 	DirectX::XMVECTOR V = DirectX::XMLoadFloat3(&v);
 	DirectX::XMVECTOR Vs = DirectX::XMLoadFloat3(&this->direction);
 	Vs = DirectX::XMVectorScale(Vs, this->magnitude);
 
-	V = DirectX::XMVectorAdd(V, Vs);
+	V = DirectX::XMVectorSubtract(V, Vs);
 
 	DirectX::XMFLOAT3 u;
 	DirectX::XMStoreFloat3(&u, V);

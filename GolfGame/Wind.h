@@ -38,5 +38,5 @@ public:
 	DirectX::XMFLOAT3 GetDirection();
 	DirectX::XMFLOAT3 GetSpeed();
 
-	DirectX::XMFLOAT3 ApplyWind(DirectX::XMFLOAT3 v);
+	DirectX::XMFLOAT3 GetDragVelocity(DirectX::XMFLOAT3 v);
 };
