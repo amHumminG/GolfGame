@@ -6,15 +6,6 @@
 #include "Course.h"
 #include "Projectile.h"
 
-enum Gravity
-{
-	EARTH = 1,
-	MOON = 2,
-	MARS = 3,
-	JUPITER = 4,
-	VENUS = 5
-};
-
 class Game
 {
 private:
