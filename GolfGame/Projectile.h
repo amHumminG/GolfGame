@@ -2,6 +2,8 @@
 
 #include <DirectXMath.h>
 
+#include "Drag.h"
+
 enum Gravity
 {
 	EARTH = 1,
@@ -14,6 +16,8 @@ enum Gravity
 class Projectile
 {
 private:
+	Drag drag;
+
 	DirectX::XMFLOAT3 pos0 = { 0.0f, 0.0f, 0.0f }; // Initial position of the ball
 	DirectX::XMFLOAT3 pos = { 0.0f, 0.0f, 0.0f }; // Current position of the ball
 	DirectX::XMFLOAT3 v0 = { 0.0f, 0.0f, 0.0f }; // Initial velocity of the ball
@@ -22,14 +26,16 @@ private:
 	float t = 0.0f; // Current time of the projectile
 
 	float iteration = 0.1f; // Update frequency
+	bool airDrag = true;
 
-	void ResetTime();
+	void ResetTime(); // Resets the time to 0.0f for every shot
 
 public:
 	Projectile() = default;
+	Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag);
 	~Projectile() = default;
 
-	void Initialize(float updateFrequency, Gravity gravity);
+	void Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag);
 
 	void CalculateProjectile();
 
@@ -44,5 +50,3 @@ public:
 	float GetTime();
 	float GetGravity();
 };
-
-// SetVelocity() and SetPosition() needs to be called on every new shot
