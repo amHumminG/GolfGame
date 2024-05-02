@@ -138,7 +138,7 @@ void Game::Run()
 {
 	StartGame();
 	unsigned int strokes = 0;
-	unsigned int par = 7; // this->course.GetPar();
+	this->course.GetPar();
 
 	while (!this->BallInHole())
 	{
@@ -146,5 +146,5 @@ void Game::Run()
 		strokes++;
 	}
 
-	EndGame(strokes, par);
+	EndGame(strokes, this->course.GetPar());
 }
