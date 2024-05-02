@@ -6,7 +6,7 @@ void Wind::RandomizeDirection()
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> dis(-1.0f, 1.0f);
 
-	DirectX::XMFLOAT3 dir = { dis(gen), dis(gen), dis(gen) };
+	DirectX::XMFLOAT3 dir = { dis(gen), 0, dis(gen) };
 	DirectX::XMVECTOR v = DirectX::XMLoadFloat3(&dir);
 	v = DirectX::XMVector3Normalize(v);
 	DirectX::XMStoreFloat3(&this->direction, v);
