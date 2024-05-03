@@ -49,11 +49,13 @@ public:
 	void SetGravity(Gravity g);
 	void SetUpdateFrequency(float updateFrequency);
 	void SetAirDrag(bool airDrag);
-	void SetWind(WindSpeed windSpeed);
+	void SetWindSpeed(WindSpeed windSpeed);
 
 	DirectX::XMFLOAT3 GetPosition();
 	DirectX::XMFLOAT3 GetVelocity();
 	float GetTotalVelocity();
 	float GetTime();
 	float GetGravity();
+	bool GetAirDrag();
+	DirectX::XMFLOAT3 GetWindSpeed();
 };
