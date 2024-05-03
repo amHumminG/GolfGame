@@ -23,6 +23,6 @@ public:
 	~InputHandler() = default;
 
 	bool GetStartVelocity(DirectX::XMFLOAT3& startVelocity);
-	bool GetGravity(unsigned int& gravityIndex);
+	bool GetIntInRange(int& input, int min, int max);
 	bool GetYesOrNo(bool& question);
 };

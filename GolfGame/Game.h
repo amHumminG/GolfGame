@@ -19,6 +19,7 @@ private:
 	float maxBallSpeed;
 
 	void SetupGame();
+	void GetSettings();
 	void StartGame();
 	void Swing(unsigned int strokes);
 	void EndGame(unsigned int strokes, unsigned int par);

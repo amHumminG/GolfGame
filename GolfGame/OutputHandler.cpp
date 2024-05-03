@@ -27,37 +27,85 @@ std::string OutputHandler::int3ToString(DirectX::XMINT3 int3)
 	return std::to_string(int3.x) + ", " + std::to_string(int3.y) + ", " + std::to_string(int3.z);
 }
 
+void OutputHandler::InputIntegerInRange(int min, int max)
+{
+	print("Please enter a valid number");
+	print(" (" + std::to_string(min) + "-" + std::to_string(max) + "): ");
+}
+
 
 // PUBLIC FUNCTIONS
 
+
+void OutputHandler::AskForAirDrag()
+{
+	print("Would you like to enable air drag? (y/n): ");
+}
+
+void OutputHandler::InvalidInputYesOrNo()
+{
+	print("Invalid input. Please enter 'y' or 'n': ");
+}
+
 void OutputHandler::SelectGravity()
 {
-	printNL("Please select gravity for the game: ");
-	printNL("1. 9.81 m/s^2 (Earth)");
-	printNL("2. 1.62 m/s^2 (Moon)");
-	printNL("3. 3.71 m/s^2 (Mars)");
-	printNL("4. 24.79 m/s^2 (Jupiter)");
-	printNL("5. 8.87 m/s^2 (Venus)");
+	printNL("Please select gravity: ");
+	printNL("1. Earth	(9.81 m/s^2)");
+	printNL("2. Moon	(1.62 m/s^2)");
+	printNL("3. Mars	(3.71 m/s^2)");
+	printNL("4. Jupiter	(24.79 m/s^2)");
+	printNL("5. Venus	(8.87 m/s^2)");
 
 	print("Enter a number (1-5): ");
 }
 
-void OutputHandler::InvalidGravity()
+void OutputHandler::InvalidInputGravity()
 {
-	print("Invalid gravity. Please enter a valid number (1-5): ");
+	print("Invalid gravity. ");
+	InputIntegerInRange(1, 5);
 }
+
+void OutputHandler::SelectWindSpeed()
+{
+	printNL("Please select wind speed: ");
+	printNL("1. Calm		(0.0) m/s");
+	printNL("2. Light		(0.1 - 3.3) m/s");
+	printNL("3. Moderate	(3.4 - 7.9) m/s");
+	printNL("4. Strong		(8.0 - 13.8) m/s");
+	printNL("5. Very strong (13.9 - 24.4) m/s");
+	printNL("6. Storm		(24.5 - 32.6) m/s");
+	printNL("7. Tornado		(32.7 - 40.0) m/s");
+	printNL("8. Random		(0.0 - 40.0) m/s");
+	
+	print("Enter a number (1-8): ");
+}
+
+void OutputHandler::InvalidInputWindSpeed()
+{
+	print("Invalid wind speed. ");
+	InputIntegerInRange(1, 8);
+}
+
 
 void OutputHandler::GameStartMessage()
 {
 	newLine();
 	printNL("------------- Welcome to Golf Game -------------");
-	// maybe write some instructions or description here
 }
 
-void OutputHandler::GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity)
+void OutputHandler::GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity, bool airDrag, DirectX::XMFLOAT3 WindSpeed)
 {
 	printNL("---------------------- GENERAL INFORMATION ----------------------");
 	printNL("Gravity is set to: " + std::to_string(gravity) + "m/s^2");
+	if (airDrag)
+	{
+		printNL("Air drag is enabled");
+		printNL("WindSpeed (m/s) is set to: " + float3ToString(WindSpeed));
+	}
+	else
+	{
+		printNL("Air drag is disabled");
+	}
 	printNL("Hole is located at: " + int3ToString(holeLocation));
 	printNL("Ball is located at: " + float3ToString(ballLocation));	
 	printNL("Par for this hole is: " + std::to_string(par));

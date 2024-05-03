@@ -85,7 +85,6 @@ int InputHandler::convertToInt(std::string input)
 }
 
 
-
 // PUBLIC FUNCTIONS
 
 // Obtains the start velocity vector from the input stream
@@ -126,23 +125,6 @@ bool InputHandler::GetStartVelocity(DirectX::XMFLOAT3& startVelocity)
     return true;
 }
 
-bool InputHandler::GetGravity(unsigned int& gravityIndex)
-{
-	std::string input = ReadInput();
-
-	if (!validateIntInput(input))
-		return false;
-
-	int value = convertToInt(input);
-
-	// Check if the value is within the valid range 1-5
-	if (value < 1 || value > 5)
-		return false;
-
-	gravityIndex = value;
-	return true;
-}
-
 // Obtains a yes or no answer from the input stream (true for yes, false for no)
 bool InputHandler::GetYesOrNo(bool& answer)
 {
@@ -171,4 +153,20 @@ bool InputHandler::GetYesOrNo(bool& answer)
 
 	// if the character is not y, Y, n, or N, the input is invalid
 	return false;
+}
+
+bool InputHandler::GetIntInRange(int& value, int min, int max)
+{
+	std::string input = ReadInput();
+
+	if (!validateIntInput(input))
+		return false;
+
+	value = convertToInt(input);
+
+	// Check if the value is within the valid range min-max
+	if (value < min || value > max)
+		return false;
+
+	return true;
 }
