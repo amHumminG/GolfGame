@@ -5,18 +5,21 @@ void Projectile::ResetTime()
 	this->t = 0.0f;
 }
 
-Projectile::Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag)
+Projectile::Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag,
+	WindSpeed windSpeed)
 {
-	this->Initialize(pos0, v0, updateFrequency, g, airDrag);
+	this->Initialize(pos0, v0, updateFrequency, g, airDrag, windSpeed);
 }
 
-void Projectile::Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag)
+void Projectile::Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag,
+	WindSpeed windSpeed)
 {
-	this->iteration = updateFrequency;
+	this->SetIteration(updateFrequency);
 	this->SetPosition(pos0);
 	this->SetVelocity(v0);
 	this->SetGravity(g);
-	this->airDrag = airDrag;
+	this->SetAirDrag(airDrag);
+	this->SetWind(windSpeed);
 }
 
 void Projectile::CalculateProjectile()
@@ -67,6 +70,11 @@ void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
 	this->pos = pos0;
 }
 
+void Projectile::SetIteration(float updateFrequency)
+{
+	this->iteration = updateFrequency;
+}
+
 void Projectile::SetGravity(Gravity g)
 {
 	switch (g)
@@ -96,6 +104,16 @@ void Projectile::SetGravity(Gravity g)
 void Projectile::SetUpdateFrequency(float iteration)
 {
 	this->iteration = iteration;
+}
+
+void Projectile::SetAirDrag(bool airDrag)
+{
+	this->airDrag = airDrag;
+}
+
+void Projectile::SetWind(WindSpeed windSpeed)
+{
+	this->wind.Initialize(windSpeed);
 }
 
 DirectX::XMFLOAT3 Projectile::GetPosition()
