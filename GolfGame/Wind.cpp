@@ -81,6 +81,11 @@ void Wind::SetDirection(DirectX::XMFLOAT3 direction)
 	DirectX::XMStoreFloat3(&this->direction, v);
 }
 
+void Wind::SetWindSpeed(WindSpeed speed)
+{
+	this->RandomizeMagnitude(speed);
+}
+
 // Returns the magnitude of the wind (total speed)
 float Wind::GetMagnitude()
 {
