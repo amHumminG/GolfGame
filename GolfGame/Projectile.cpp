@@ -46,6 +46,7 @@ void Projectile::SetVelocity(DirectX::XMFLOAT3 v0)
 void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
 {
 	this->pos0 = pos0;
+	this->pos = pos0;
 }
 
 void Projectile::SetGravity(Gravity g)
