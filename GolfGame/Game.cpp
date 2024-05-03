@@ -6,27 +6,63 @@ void Game::SetupGame()
 	this->course.GenerateHole(100, 400, 1, 50);
 }
 
-void Game::StartGame()
+void Game::GetSettings()
 {
-	SetupGame();
-
-	this->output.GameStartMessage();
-	this ->output.SelectGravity();
-
-	// Set gravity
-	float gravity = 0;
-	unsigned int gravityChoice = 1; // Default to Earth gravity
+	// Gravity
+	this->output.SelectGravity();
+	int gravityChoice = 1; // Default to Earth gravity
 	bool validInput = false;
 	while (!validInput)
 	{
-		validInput = this->input.GetGravity(gravityChoice);
+		validInput = this->input.GetIntInRange(gravityChoice, 1, 5);
 		if (!validInput)
-			this->output.InvalidGravity();
+			this->output.InvalidInputGravity();
 	}
-	// cast gravityChoice to enum
 	this->ball.SetGravity(static_cast<Gravity>(gravityChoice));
 
-	this->output.GameInfoMessage(this->ball.GetPosition(), this->course.GetHoleLocation(), this->course.GetPar(), this->maxBallSpeed, this->ball.GetGravity());
+	// Air Drag
+	this->output.AskForAirDrag();
+	bool airDrag = true;
+	validInput = false;
+	while (!validInput)
+	{
+		validInput = this->input.GetYesOrNo(airDrag);
+		if (!validInput)
+			this->output.InvalidInputYesOrNo();
+	}
+	this->ball.SetAirDrag(airDrag);
+
+	if (airDrag)
+	{
+		this->output.SelectWindSpeed();
+		int windSpeed = 1;	// Default to no wind
+		validInput = false;
+		while (!validInput)
+		{
+			validInput = this->input.GetIntInRange(windSpeed, 1, 8);
+			if (!validInput)
+				this->output.InvalidInputWindSpeed();
+		}
+		this->ball.SetWindSpeed(static_cast<WindSpeed>(windSpeed));
+	}
+}
+
+void Game::StartGame()
+{
+	this->output.GameStartMessage();
+	SetupGame();
+	GetSettings();
+
+	this->output.GameInfoMessage
+	(
+		this->ball.GetPosition(), 
+		this->course.GetHoleLocation(), 
+		this->course.GetPar(), 
+		this->maxBallSpeed, 
+		this->ball.GetGravity(),
+		this->ball.GetAirDrag(),
+		this->ball.GetWindSpeed()
+	);
 }
 
 void Game::Swing(unsigned int strokes)
@@ -122,6 +158,8 @@ void Game::RepeatPlay()
 	while (!validInput)
 	{
 		validInput = this->input.GetYesOrNo(replay);
+		if (!validInput)
+			this->output.InvalidInputYesOrNo();
 	}
 
 	if (replay)
