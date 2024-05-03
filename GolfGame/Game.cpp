@@ -59,7 +59,9 @@ void Game::StartGame()
 		this->course.GetHoleLocation(), 
 		this->course.GetPar(), 
 		this->maxBallSpeed, 
-		this->ball.GetGravity()
+		this->ball.GetGravity(),
+		this->ball.GetAirDrag(),
+		this->ball.GetWindSpeed()
 	);
 }
 
