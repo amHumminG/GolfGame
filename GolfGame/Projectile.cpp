@@ -5,35 +5,52 @@ void Projectile::ResetTime()
 	this->t = 0.0f;
 }
 
-void Projectile::Initialize(float updateFrequency, Gravity g)
+Projectile::Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag)
 {
-	this->iteration = iteration;
-	SetGravity(g);
+	this->Initialize(pos0, v0, updateFrequency, g, airDrag);
+}
+
+void Projectile::Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag)
+{
+	this->iteration = updateFrequency;
+	this->SetPosition(pos0);
+	this->SetVelocity(v0);
+	this->SetGravity(g);
+	this->airDrag = airDrag;
 }
 
 void Projectile::CalculateProjectile()
 {
 	t += iteration;
 
-	// Position
-	pos.x = v0.x * t + pos0.x;
-	pos.y = v0.y * t - ((gravity * pow(t, 2)) / 2) + pos0.y;
-	pos.z = v0.z * t + pos0.z;
-
-	// Velocity
-	v.x = v0.x;
-	v.y = v0.y - gravity * t; // Calculate the new vy after the time t
-	v.z = v0.z;
-
-	if (pos.y <= 0) // If pos.y <= 0, calculate velocity and position when the ball is exactly at y = 0
+	// If air drag should be calculated
+	if (this->airDrag)
 	{
-		t = v0.y / (gravity / 2);
-
+		this->drag.CalculateDrag(this->v0, this->v, this->GetTotalVelocity(), this->pos, this->gravity, 
+			this->iteration, this->t);
+	}
+	else
+	{
+		// Position
 		pos.x = v0.x * t + pos0.x;
-		pos.y = 0.0f;
+		pos.y = v0.y * t - ((gravity * pow(t, 2)) / 2) + pos0.y;
 		pos.z = v0.z * t + pos0.z;
 
-		v.y = v0.y - gravity * t;
+		// Velocity
+		v.x = v0.x;
+		v.y = v0.y - gravity * t; // Calculate the new vy after the time t
+		v.z = v0.z;
+
+		if (pos.y <= 0) // If pos.y <= 0, calculate velocity and position when the ball is exactly at y = 0
+		{
+			t = v0.y / (gravity / 2);
+
+			pos.x = v0.x * t + pos0.x;
+			pos.y = 0.0f;
+			pos.z = v0.z * t + pos0.z;
+
+			v.y = v0.y - gravity * t;
+		}
 	}
 }
 
@@ -41,6 +58,7 @@ void Projectile::SetVelocity(DirectX::XMFLOAT3 v0)
 {
 	this->ResetTime();
 	this->v0 = v0;
+	this->v = v0;
 }
 
 void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
