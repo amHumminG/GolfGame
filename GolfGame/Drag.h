@@ -23,7 +23,7 @@ public:
 	Drag() = default;
 	~Drag() = default;
 
-	void CalculateDrag(DirectX::XMFLOAT3& v0, DirectX::XMFLOAT3& v, float vTotal, DirectX::XMFLOAT3& pos,
+	void CalculateDrag(DirectX::XMFLOAT3& v, float uTotal, DirectX::XMFLOAT3& pos,
 		float gravity, float iteration, float& t);
 
 	void SetDragCoefficient(float Cd);
