@@ -5,28 +5,33 @@ void Projectile::ResetTime()
 	this->t = 0.0f;
 }
 
-Projectile::Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag)
+Projectile::Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag,
+	WindSpeed windSpeed)
 {
-	this->Initialize(pos0, v0, updateFrequency, g, airDrag);
+	this->Initialize(pos0, v0, updateFrequency, g, airDrag, windSpeed);
 }
 
-void Projectile::Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag)
+void Projectile::Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag,
+	WindSpeed windSpeed)
 {
-	this->iteration = updateFrequency;
+	this->SetIteration(updateFrequency);
 	this->SetPosition(pos0);
 	this->SetVelocity(v0);
 	this->SetGravity(g);
-	this->airDrag = airDrag;
+	this->SetAirDrag(airDrag);
+	this->SetWindSpeed(windSpeed);
 }
 
 void Projectile::CalculateProjectile()
 {
 	t += iteration;
 
-	// If air drag should be calculated
+	// If air drag should be calculated, else calculate only gravity
 	if (this->airDrag)
 	{
-		this->drag.CalculateDrag(this->v0, this->v, this->GetTotalVelocity(), this->pos, this->gravity, 
+		DirectX::XMFLOAT3 u = this->wind.GetDragVelocity(this->v);
+		float uTotal = pow(pow(u.x, 2) + pow(u.y, 2) + pow(u.z, 2), 0.5f);
+		this->drag.CalculateDrag(this->v, uTotal, this->pos, this->gravity, 
 			this->iteration, this->t);
 	}
 	else
@@ -67,6 +72,11 @@ void Projectile::SetPosition(DirectX::XMFLOAT3 pos0)
 	this->pos = pos0;
 }
 
+void Projectile::SetIteration(float updateFrequency)
+{
+	this->iteration = updateFrequency;
+}
+
 void Projectile::SetGravity(Gravity g)
 {
 	switch (g)
@@ -98,6 +108,16 @@ void Projectile::SetUpdateFrequency(float iteration)
 	this->iteration = iteration;
 }
 
+void Projectile::SetAirDrag(bool airDrag)
+{
+	this->airDrag = airDrag;
+}
+
+void Projectile::SetWindSpeed(WindSpeed windSpeed)
+{
+	this->wind.Initialize(windSpeed);
+}
+
 DirectX::XMFLOAT3 Projectile::GetPosition()
 {
 	return this->pos;
@@ -121,4 +141,14 @@ float Projectile::GetTime()
 float Projectile::GetGravity()
 {
 	return this->gravity;
+}
+
+bool Projectile::GetAirDrag()
+{
+	return this->airDrag;
+}
+
+DirectX::XMFLOAT3 Projectile::GetWindSpeed()
+{
+	return this->wind.GetSpeed();
 }

@@ -3,6 +3,7 @@
 #include <DirectXMath.h>
 
 #include "Drag.h"
+#include "Wind.h"
 
 enum Gravity
 {
@@ -17,6 +18,7 @@ class Projectile
 {
 private:
 	Drag drag;
+	Wind wind;
 
 	DirectX::XMFLOAT3 pos0 = { 0.0f, 0.0f, 0.0f }; // Initial position of the ball
 	DirectX::XMFLOAT3 pos = { 0.0f, 0.0f, 0.0f }; // Current position of the ball
@@ -32,21 +34,28 @@ private:
 
 public:
 	Projectile() = default;
-	Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag);
+	Projectile(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag,
+		WindSpeed windSpeed);
 	~Projectile() = default;
 
-	void Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag);
+	void Initialize(DirectX::XMFLOAT3 pos0, DirectX::XMFLOAT3 v0, float updateFrequency, Gravity g, bool airDrag,
+		WindSpeed windSpeed);
 
 	void CalculateProjectile();
 
 	void SetVelocity(DirectX::XMFLOAT3 v0);
 	void SetPosition(DirectX::XMFLOAT3 pos0);
+	void SetIteration(float iteration);
 	void SetGravity(Gravity g);
-	void SetUpdateFrequency(float iteration);
+	void SetUpdateFrequency(float updateFrequency);
+	void SetAirDrag(bool airDrag);
+	void SetWindSpeed(WindSpeed windSpeed);
 
 	DirectX::XMFLOAT3 GetPosition();
 	DirectX::XMFLOAT3 GetVelocity();
 	float GetTotalVelocity();
 	float GetTime();
 	float GetGravity();
+	bool GetAirDrag();
+	DirectX::XMFLOAT3 GetWindSpeed();
 };
