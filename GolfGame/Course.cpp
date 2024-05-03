@@ -12,9 +12,11 @@ int Course::RandomInRange(int min, int max)
 // Adds one to the par for every increment of distance between the ball and the hole
 unsigned int Course::CalculatePar(unsigned int Increment)
 {
+	unsigned int par = 1;	// Baseline par
 	// Calculate the distance between 0,0,0 ball and the hole
 	int distance = sqrt(pow((this->hole.location.x + this->hole.location.z), 2));
-	return distance / Increment;
+	par += distance / Increment;
+	return par;
 }
 
 // Generates a hole with a random location and radius
