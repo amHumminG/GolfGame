@@ -5,14 +5,14 @@
 
 enum WindSpeed
 {
-	NO_WIND = 0,			// 0.0			m/s
-	LIGHT_WIND = 1,			// 0.1 - 3.3	m/s
-	MODERATE_WIND = 2,		// 3.4 - 7.9    m/s
-	STRONG_WIND = 3,		// 8.0 - 13.8   m/s
-	VERY_STRONG_WIND = 4,	// 13.9 - 24.4  m/s
-	STORM_WIND = 5,			// 24.5 - 32.6  m/s
-	HURRICANE_WIND = 6,		// 32.7 - 40.0  m/s
-	RANDOM_WIND = 7			// 0.0 - 40.0   m/s
+	NO_WIND = 1,			// 0.0			m/s
+	LIGHT_WIND = 2,			// 0.1 - 3.3	m/s
+	MODERATE_WIND = 3,		// 3.4 - 7.9    m/s
+	STRONG_WIND = 4,		// 8.0 - 13.8   m/s
+	VERY_STRONG_WIND = 5,	// 13.9 - 24.4  m/s
+	STORM_WIND = 6,			// 24.5 - 32.6  m/s
+	HURRICANE_WIND = 7,		// 32.7 - 40.0  m/s
+	RANDOM_WIND = 8			// 0.0 - 40.0   m/s
 };
 
 class Wind
