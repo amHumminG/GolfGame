@@ -30,8 +30,7 @@ void Projectile::CalculateProjectile()
 	if (this->airDrag)
 	{
 		DirectX::XMFLOAT3 u = this->wind.GetDragVelocity(this->v);
-		float uTotal = pow(pow(u.x, 2) + pow(u.y, 2) + pow(u.z, 2), 0.5f);
-		this->drag.CalculateDrag(this->v, uTotal, this->pos, this->gravity, 
+		this->drag.CalculateDrag(this->v, u, this->pos, this->gravity, 
 			this->iteration, this->t);
 	}
 	else
