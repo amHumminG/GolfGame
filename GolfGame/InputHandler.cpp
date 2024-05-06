@@ -64,12 +64,6 @@ bool InputHandler::validateIntInput(std::string input)
 	return true;
 }
 
-// Converts a string with length 1 to a char
-char InputHandler::convertToChar(std::string input)
-{
-	return input[0];
-}
-
 // Converts a string to a float
 float InputHandler::convertToFloat(std::string input)
 {
@@ -137,18 +131,21 @@ bool InputHandler::GetYesOrNo(bool& answer)
 	if (input.length() > 1)
 		return false;
 
-	// if the character is y or Y, answer is true
-	if (convertToChar(input) == 'y' || convertToChar(input) == 'Y');
+	switch (input[0])
 	{
-		answer = true;
-		return true;
-	}
-	
-	// if the character is n or N, answer is false
-	if (convertToChar(input) == 'n' || convertToChar(input) == 'N')
-	{
-		answer = false;
-		return true;
+		case 'y':
+			answer = true;
+			return true;
+		case 'Y':
+			answer = true;
+			return true;
+
+		case 'n':
+			answer = false;
+			return true;
+		case 'N':
+			answer = false;
+			return true;
 	}
 
 	// if the character is not y, Y, n, or N, the input is invalid
