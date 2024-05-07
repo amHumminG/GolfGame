@@ -33,7 +33,8 @@ public:
 
 	void SetMagnitude(float magnitude);
 	void SetDirection(DirectX::XMFLOAT3 direction);
-	void SetWindSpeed(WindSpeed speed);
+	void SetWindSpeed(DirectX::XMFLOAT3 wind);
+	void GenerateWind(WindSpeed speed);
 
 	float GetMagnitude();
 	DirectX::XMFLOAT3 GetDirection();
