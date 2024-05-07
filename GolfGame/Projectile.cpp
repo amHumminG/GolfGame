@@ -117,6 +117,11 @@ void Projectile::SetWindSpeed(WindSpeed windSpeed)
 	this->wind.Initialize(windSpeed);
 }
 
+void Projectile::SetWindManual(DirectX::XMFLOAT3 wind)
+{
+	this->wind.SetWindSpeed(wind);
+}
+
 DirectX::XMFLOAT3 Projectile::GetPosition()
 {
 	return this->pos;
