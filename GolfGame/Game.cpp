@@ -67,7 +67,7 @@ void Game::StartGame()
 
 void Game::Swing(unsigned int strokes)
 {
-	this->output.PreStrokeInfo(strokes, this->ball.GetPosition(), this->course.GetHoleLocation());
+	this->output.PreStrokeInfo(strokes, this->course.GetPar(), this->ball.GetPosition(), this->course.GetHoleLocation(), this->ball.GetWindSpeed());
 
 	DirectX::XMFLOAT3 v0;
 	bool validInput = false;
@@ -83,7 +83,7 @@ void Game::Swing(unsigned int strokes)
 			float length = pow(pow(v0.x, 2) + pow(v0.y, 2) + pow(v0.z, 2), 0.5f);
 			if (length > this->maxBallSpeed)
 			{
-				this->output.InvalidBallSpeed(length);
+				this->output.InvalidBallSpeed(length, maxBallSpeed);
 				validInput = false;
 			}
 		}
@@ -224,7 +224,7 @@ void Game::RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind)
 void Game::Run()
 {
 	StartGame();
-	unsigned int strokes = 0;
+	unsigned int strokes = 1;
 	this->course.GetPar();
 
 	bool inBounds = true;
