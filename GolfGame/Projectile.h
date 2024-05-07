@@ -50,6 +50,7 @@ public:
 	void SetUpdateFrequency(float updateFrequency);
 	void SetAirDrag(bool airDrag);
 	void SetWindSpeed(WindSpeed windSpeed);
+	void SetWindManual(DirectX::XMFLOAT3 wind);
 
 	DirectX::XMFLOAT3 GetPosition();
 	DirectX::XMFLOAT3 GetVelocity();
@@ -58,4 +59,5 @@ public:
 	float GetGravity();
 	bool GetAirDrag();
 	DirectX::XMFLOAT3 GetWindSpeed();
+
 };

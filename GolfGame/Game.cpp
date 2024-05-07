@@ -172,6 +172,35 @@ void Game::RepeatPlay()
 	}
 }
 
+void Game::RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind)
+{
+	SetupGame();
+	this->ball.SetGravity(static_cast<Gravity>(gravity));
+	this->ball.SetAirDrag(airDrag);
+	this->ball.SetWindManual(wind);
+
+	this->output.GameInfoMessage(
+		this->ball.GetPosition(),
+		this->course.GetHoleLocation(),
+		this->course.GetPar(),
+		this->maxBallSpeed,
+		this->ball.GetGravity(),
+		this->ball.GetAirDrag(),
+		this->ball.GetWindSpeed()
+	);
+
+	unsigned int strokes = 0;
+	this->course.GetPar();
+
+	while (!this->BallInHole())
+	{
+		Swing(strokes);
+		strokes++;
+	}
+
+	EndGame(strokes, this->course.GetPar());
+}
+
 void Game::Run()
 {
 	StartGame();

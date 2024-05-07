@@ -81,9 +81,22 @@ void Wind::SetDirection(DirectX::XMFLOAT3 direction)
 	DirectX::XMStoreFloat3(&this->direction, v);
 }
 
-void Wind::SetWindSpeed(WindSpeed speed)
+void Wind::GenerateWind(WindSpeed speed)
 {
 	this->RandomizeMagnitude(speed);
+}
+
+void Wind::SetWindSpeed(DirectX::XMFLOAT3 wind)
+{
+	DirectX::XMVECTOR dir = DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&wind));
+	DirectX::XMStoreFloat3(&this->direction, dir);
+
+	if (this->direction.x != 0.0f)
+		this->magnitude = wind.x / this->direction.x;
+	else if (this->direction.y != 0.0f)
+		this->magnitude = wind.y / this->direction.y;
+	else if (this->direction.z != 0.0f)
+		this->magnitude = wind.z / this->direction.z;
 }
 
 // Returns the magnitude of the wind (total speed)
@@ -117,7 +130,7 @@ DirectX::XMFLOAT3 Wind::GetDragVelocity(DirectX::XMFLOAT3 v)
 	Vs = DirectX::XMVectorScale(Vs, this->magnitude);
 
 	V = DirectX::XMVectorSubtract(V, Vs);
-
+	// (-20 - -1, 20, -20 - 19) = (-19, 20 -39)
 	DirectX::XMFLOAT3 u;
 	DirectX::XMStoreFloat3(&u, V);
 	return u;

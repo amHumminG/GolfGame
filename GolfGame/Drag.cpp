@@ -4,9 +4,10 @@ void Drag::CalculateDrag(DirectX::XMFLOAT3& v, DirectX::XMFLOAT3 u, DirectX::XMF
 	float gravity, float iteration, float& t)
 {
 	// Drag accelerations
-	float ax = - (DENSITY * u.x * AREA * Cd * v.x) / (2 * MASS);
-	float ay = - gravity - (DENSITY * u.y * AREA * Cd * v.y) / (2 * MASS);
-	float az = - (DENSITY * u.z * AREA * Cd * v.z) / (2 * MASS);
+	float uTotal = pow(pow(u.x, 2) + pow(u.y, 2) + pow(u.z, 2), 0.5f);
+	float ax = - (DENSITY * u.x * AREA * Cd * uTotal) / (2 * MASS);
+	float ay = - gravity - (DENSITY * u.y * AREA * Cd * uTotal) / (2 * MASS);
+	float az = - (DENSITY * u.z * AREA * Cd * uTotal) / (2 * MASS);
 
 	// New velocities
 	v.x = v.x + ax * iteration;
