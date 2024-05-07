@@ -52,7 +52,7 @@ void OutputHandler::SelectGravity()
 	printNL("1. Earth (9.81 m/s^2)");
 	printNL("2. Moon (1.62 m/s^2)");
 	printNL("3. Mars (3.71 m/s^2)");
-	printNL("4. Jupiter	(24.79 m/s^2)");
+	printNL("4. Jupiter (24.79 m/s^2)");
 	printNL("5. Venus (8.87 m/s^2)");
 
 	print("Enter a number (1-5): ");
