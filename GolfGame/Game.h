@@ -25,6 +25,7 @@ private:
 	void EndGame(unsigned int strokes, unsigned int par);
 
 	bool BallInHole();
+	bool BallInBounds();
 
 public:
 
