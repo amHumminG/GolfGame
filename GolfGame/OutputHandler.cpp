@@ -4,7 +4,22 @@
 
 void OutputHandler::print(std::string message)
 {
-	std::cout << message;
+	std::cout <<  message;
+}
+
+void OutputHandler::print(int value)
+{
+	std::cout << value;
+}
+
+void OutputHandler::print(unsigned int value)
+{
+	std::cout << value;
+}
+
+void OutputHandler::print(float value)
+{
+	std::cout << std::fixed << std::setprecision(2) << value;
 }
 
 void OutputHandler::printNL(std::string message)
@@ -17,20 +32,24 @@ void OutputHandler::newLine()
 	std::cout << std::endl;
 }
 
-std::string OutputHandler::float3ToString(DirectX::XMFLOAT3 float3)
+void OutputHandler::printFloat3(DirectX::XMFLOAT3 float3)
 {
-	return std::to_string(float3.x) + ", " + std::to_string(float3.y) + ", " + std::to_string(float3.z);
+	print(float3.x); print(", ");
+	print(float3.y); print(", ");
+	print(float3.z);
 }
 
-std::string OutputHandler::int3ToString(DirectX::XMINT3 int3)
+void OutputHandler::printInt3(DirectX::XMINT3 int3)
 {
-	return std::to_string(int3.x) + ", " + std::to_string(int3.y) + ", " + std::to_string(int3.z);
+	print(int3.x); print(", ");
+	print(int3.y); print(", ");
+	print(int3.z);
 }
 
 void OutputHandler::InputIntegerInRange(int min, int max)
 {
 	print("Please enter a valid number");
-	print(" (" + std::to_string(min) + "-" + std::to_string(max) + "): ");
+	print(" ("); print(min); print("-"); print(max); print("): ");
 }
 
 
@@ -96,23 +115,22 @@ void OutputHandler::GameStartMessage()
 void OutputHandler::GameInfoMessage(DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, unsigned int par, unsigned int maxStartVelocity, float gravity, bool airDrag, DirectX::XMFLOAT3 WindSpeed)
 {
 	printNL("---------------------- GENERAL INFORMATION ----------------------");
-	printNL("Gravity is set to: " + std::to_string(gravity) + "m/s^2");
+	print("Gravity is set to: "); print(gravity); print("m/s^2"); newLine();
 	if (airDrag)
 	{
 		printNL("Air drag is enabled");
-		printNL("WindSpeed (m/s) is set to: " + float3ToString(WindSpeed));
+		print("WindSpeed (m/s) is set to: "); printFloat3(WindSpeed); newLine();
 	}
 	else
 	{
 		printNL("Air drag is disabled");
 	}
-	printNL("Hole is located at: " + int3ToString(holeLocation));
-	printNL("Ball is located at: " + float3ToString(ballLocation));	
-	printNL("Par for this hole is: " + std::to_string(par));
-	printNL("Total allowed starting velocity for each shot is " + std::to_string(maxStartVelocity) + "m/s or less");
+	print("Hole is located at: "); printInt3(holeLocation); newLine();
+	print("Ball is located at: "); printFloat3(ballLocation); newLine();
+	print("Par for this hole is: "); print(par); newLine();
+	print("Total allowed starting velocity for each shot is "); print(maxStartVelocity); print(" m/s or less");
 	newLine();
 	printNL("Good luck!");
-	newLine();
 }
 
 void OutputHandler::GameEndMessage(unsigned int strokes, unsigned int par)
@@ -122,45 +140,45 @@ void OutputHandler::GameEndMessage(unsigned int strokes, unsigned int par)
 	{
 		printNL("------------------------------------------------");
 		printNL("Hole in one!");
-		printNL("Par for this hole was: " + std::to_string(par));
+		print("Par for this hole was: "); print(par); newLine();
 		printNL("------------------------------------------------");
 	}
 	else if (strokes == par)
 	{
 		printNL("------------------------------------------------");
 		printNL("Par! Nicely done.");
-		printNL("Par for this hole was: " + std::to_string(par));
+		printNL("Par for this hole was: "); print(par); newLine();
 		printNL("------------------------------------------------");
 	}
 	else if (strokes < par)
 	{
 		printNL("------------------------------------------------");
-		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
-		printNL("Par for this hole was: " + std::to_string(par));
+		print("You have completed the hole in "); print(strokes); print(" strokes."); newLine();
+		print("Par for this hole was: "); print(par); newLine();
 		printNL("Impressive.");
 		printNL("------------------------------------------------");
 	}
 	else if (strokes < par + 5)
 	{
 		printNL("------------------------------------------------");
-		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
-		printNL("Par for this hole was: " + std::to_string(par));
+		print("You have completed the hole in "); print(strokes); print(" strokes."); newLine();
+		print("Par for this hole was: "); print(par); newLine();
 		printNL("Not even close buddy.");
 		printNL("------------------------------------------------");
 	}
 	else if (strokes < par + 10)
 	{
 		printNL("------------------------------------------------");
-		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
-		printNL("Par for this hole was: " + std::to_string(par));
+		print("You have completed the hole in "); print(strokes); print(" strokes."); newLine();
+		print("Par for this hole was: "); print(par); newLine();
 		printNL("Next time, aim for the hole.");
 		printNL("------------------------------------------------");
 	}
 	else
 	{
 		printNL("------------------------------------------------");
-		printNL("You have completed the hole in " + std::to_string(strokes) + " strokes.");
-		printNL("Par for this hole was: " + std::to_string(par));
+		print("You have completed the hole in "); print(strokes); print(" strokes."); newLine();
+		print("Par for this hole was: "); print(par); newLine();
 		printNL("You should probably consider another hobby.");
 		printNL("------------------------------------------------");
 	}
@@ -174,11 +192,13 @@ void OutputHandler::BallOutOfBounds()
 	printNL("-----------------------------------------------");
 }
 
-void OutputHandler::PreStrokeInfo(unsigned int stroke, DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation)
+void OutputHandler::PreStrokeInfo(unsigned int stroke, unsigned int par, DirectX::XMFLOAT3 ballLocation, DirectX::XMINT3 holeLocation, DirectX::XMFLOAT3 windSpeed)
 {
-	printNL("-------------- Stroke: " + std::to_string(stroke) + "--------------");
-	printNL("Ball location: " + float3ToString(ballLocation));
-	printNL("Hole location: " + int3ToString(holeLocation));
+	newLine();
+	print("-------------- Stroke: "); print(stroke); print(" (Par: "); print(par); print(") --------------"); newLine();
+	print("Ball location: "); printFloat3(ballLocation); newLine();
+	print("Hole location: "); printInt3(holeLocation); newLine();
+	print("Wind speed: "); printFloat3(windSpeed); newLine();
 	printNL("------------------------------------------------");
 	print("Please enter starting velocity for your next stroke <x y z>: ");
 }
@@ -188,18 +208,19 @@ void OutputHandler::InvalidInputVelocity()
 	print("Invalid input. Please enter a valid starting velocity <x y z>: ");
 }
 
-void OutputHandler::InvalidBallSpeed(float ballSpeed)
+void OutputHandler::InvalidBallSpeed(float ballSpeed, float maxBallSpeed)
 {
-	print("Invalid ball speed: " + std::to_string(ballSpeed) + ". Please enter a valid starting velocity <x y z>: ");
+	print("Invalid ball speed: "); print(ballSpeed); print(" m/s (max: "); print(maxBallSpeed); print(" m/s) .Please enter a valid starting velocity <x y z> : ");
 }
 
 void OutputHandler::BallInfo(float t, DirectX::XMFLOAT3 ballPosition, DirectX::XMFLOAT3 ballSpeed)
 {
-	print("t = " + std::to_string(t));
+	print("t = "); print(t);
 	print(" | ");
-	print("Pos: " + float3ToString(ballPosition));
+	print("Pos: "); printFloat3(ballPosition);
 	print(" | ");
-	printNL("Speed: " + float3ToString(ballSpeed));
+	print("Speed: "); printFloat3(ballSpeed);
+	newLine();
 }
 
 void OutputHandler::AskForReplay()
