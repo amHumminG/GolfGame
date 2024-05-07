@@ -119,6 +119,20 @@ bool Game::BallInHole()
 	return length <= holeRadius;
 }
 
+bool Game::BallInBounds()
+{
+	DirectX::XMFLOAT3 ballPos = ball.GetPosition();
+	DirectX::XMINT3 bounds = this->course.GetBounds();
+	
+	if (ballPos.x > bounds.x || ballPos.x < -bounds.x)
+		return false;	
+	if (ballPos.y > bounds.y || ballPos.y < -bounds.y)
+		return false;	
+	if (ballPos.z > bounds.z || ballPos.z < -bounds.z)
+		return false;
+	return true;
+}
+
 Game::Game()
 {
 	Initialize();
@@ -196,6 +210,12 @@ void Game::RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind)
 	{
 		Swing(strokes);
 		strokes++;
+
+		if (!this->BallInBounds())
+		{
+			this->output.BallOutOfBounds();
+			break;
+		}
 	}
 
 	EndGame(strokes, this->course.GetPar());
@@ -207,11 +227,23 @@ void Game::Run()
 	unsigned int strokes = 0;
 	this->course.GetPar();
 
+	bool inBounds = true;
+
 	while (!this->BallInHole())
 	{
 		Swing(strokes);
 		strokes++;
+
+		inBounds = this->BallInBounds();
+		if (!inBounds)
+		{
+			this->output.BallOutOfBounds();
+			break;
+		}
 	}
 
-	EndGame(strokes, this->course.GetPar());
+	if (inBounds)
+	{
+		EndGame(strokes, this->course.GetPar());
+	}
 }
