@@ -105,6 +105,16 @@ void OutputHandler::InvalidInputWindSpeed()
 	InputIntegerInRange(1, 8);
 }
 
+void OutputHandler::SelectSpinRate()
+{
+	newLine();
+	print("Please select spin rate (backspin 0 - 6000 rpm): ");
+}
+
+void OutputHandler::InvalidInputSpinRate()
+{
+	print("Invalid spin rate. Please enter a valid spin rate (0 - 6000 rpm): ");
+}
 
 void OutputHandler::GameStartMessage()
 {

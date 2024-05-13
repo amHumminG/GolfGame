@@ -167,3 +167,19 @@ bool InputHandler::GetIntInRange(int& value, int min, int max)
 
 	return true;
 }
+
+bool InputHandler::GetFloatInRange(float& value, float min, float max)
+{
+	std::string input = ReadInput();
+
+	if (!validateFloatInput(input))
+		return false;
+
+	value = convertToFloat(input);
+
+	// Check if the value is within the valid range min-max
+	if (value < min || value > max)
+		return false;
+
+	return true;
+}

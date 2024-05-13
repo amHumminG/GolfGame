@@ -13,7 +13,6 @@ private:
 	bool validateFloatInput(std::string input);
 	bool validateIntInput(std::string input);
 
-	char convertToChar(std::string input);
 	float convertToFloat(std::string input);
 	int convertToInt(std::string input);
 
@@ -23,6 +22,8 @@ public:
 	~InputHandler() = default;
 
 	bool GetStartVelocity(DirectX::XMFLOAT3& startVelocity);
-	bool GetIntInRange(int& input, int min, int max);
 	bool GetYesOrNo(bool& question);
+	bool GetIntInRange(int& input, int min, int max);
+	bool GetFloatInRange(float& input, float min, float max);
+
 };

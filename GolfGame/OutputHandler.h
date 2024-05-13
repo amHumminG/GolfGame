@@ -32,13 +32,14 @@ public:
 	void AskForReplay();
 
 	void InvalidInputYesOrNo();
-	
 
 	// Settings
 	void SelectGravity();
 	void InvalidInputGravity();
 	void SelectWindSpeed();
 	void InvalidInputWindSpeed();
+	void SelectSpinRate();
+	void InvalidInputSpinRate();
 
 	void GameStartMessage();
 	void GameInfoMessage
