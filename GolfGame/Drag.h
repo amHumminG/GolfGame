@@ -18,6 +18,8 @@ class Drag
 private:
 	float Cd = 0.21f; // Drag coefficient (Different value for different balls)
 
+	float GetTotalVelocity(DirectX::XMFLOAT3 velocity);
+
 public:
 	Drag() = default;
 	~Drag() = default;
@@ -25,6 +27,10 @@ public:
 	void CalculateDrag(DirectX::XMFLOAT3& v, DirectX::XMFLOAT3 u, DirectX::XMFLOAT3& pos,
 		float gravity, float iteration, float& t);
 
+	DirectX::XMFLOAT3 GetDragForce(DirectX::XMFLOAT3 u, float gravity);
+
 	void SetDragCoefficient(float Cd);
+
+	float GetDragCoefficient();
 };
 
