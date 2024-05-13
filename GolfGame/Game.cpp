@@ -95,7 +95,7 @@ void Game::Swing(unsigned int strokes)
 	while (this->ball.GetPosition().y > 0.0f || !ballHit)
 	{
 		// Set ball velocity and calculate its projectile
-		this->ball.CalculateProjectile();
+		this->ball.CalculateProjectile1();
 		
 		// Print ball information
 		this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
