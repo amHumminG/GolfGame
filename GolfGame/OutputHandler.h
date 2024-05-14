@@ -38,7 +38,7 @@ public:
 	void InvalidInputGravity();
 	void SelectWindSpeed();
 	void InvalidInputWindSpeed();
-	void SelectSpinRate();
+	void AskForSpinRate();
 	void InvalidInputSpinRate();
 
 	void GameStartMessage();
