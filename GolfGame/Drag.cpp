@@ -1,10 +1,15 @@
 #include "Drag.h"
 
+float Drag::GetTotalVelocity(DirectX::XMFLOAT3 velocity)
+{
+	return pow(pow(velocity.x, 2) + pow(velocity.y, 2) + pow(velocity.z, 2), 0.5f);
+}
+
 void Drag::CalculateDrag(DirectX::XMFLOAT3& v, DirectX::XMFLOAT3 u, DirectX::XMFLOAT3& pos,
 	float gravity, float iteration, float& t)
 {
 	// Drag accelerations
-	float uTotal = pow(pow(u.x, 2) + pow(u.y, 2) + pow(u.z, 2), 0.5f);
+	float uTotal = this->GetTotalVelocity(u);
 	float ax = - (DENSITY * u.x * AREA * Cd * uTotal) / (2 * MASS);
 	float ay = - gravity - (DENSITY * u.y * AREA * Cd * uTotal) / (2 * MASS);
 	float az = - (DENSITY * u.z * AREA * Cd * uTotal) / (2 * MASS);
@@ -22,10 +27,11 @@ void Drag::CalculateDrag(DirectX::XMFLOAT3& v, DirectX::XMFLOAT3 u, DirectX::XMF
 	// Next iteration
 	DirectX::XMFLOAT3 newV;
 	DirectX::XMFLOAT3 newPos;
+	float vTotal = this->GetTotalVelocity(v);
 
-	ax = - (DENSITY * u.x * AREA * Cd * v.x) / (2 * MASS);
-	ay = - gravity - (DENSITY * u.y * AREA * Cd * v.y) / (2 * MASS);
-	az = - (DENSITY * u.z * AREA * Cd * v.z) / (2 * MASS);
+	ax = - (DENSITY * vTotal * AREA * Cd * v.x) / (2 * MASS);
+	ay = - gravity - (DENSITY * vTotal * AREA * Cd * v.y) / (2 * MASS);
+	az = - (DENSITY * vTotal * AREA * Cd * v.z) / (2 * MASS);
 
 	newV.x = v.x + ax * iteration;
 	newV.y = v.y + ay * iteration;
@@ -55,7 +61,26 @@ void Drag::CalculateDrag(DirectX::XMFLOAT3& v, DirectX::XMFLOAT3 u, DirectX::XMF
 	}
 }
 
+DirectX::XMFLOAT3 Drag::GetDragForce(DirectX::XMFLOAT3 u, float gravity)
+{
+	float uTotal = this->GetTotalVelocity(u);
+	float Fd = (DENSITY * pow(uTotal, 2) * AREA * Cd) / 2;
+
+	DirectX::XMFLOAT3 FdVector;
+
+	FdVector.x = -Fd * u.x / uTotal;
+	FdVector.y = -Fd * u.y / uTotal;
+	FdVector.z = -Fd * u.z / uTotal;
+
+	return FdVector;
+}
+
 void Drag::SetDragCoefficient(float Cd)
 {
 	this->Cd = Cd;
+}
+
+float Drag::GetDragCoefficient()
+{
+	return this->Cd;
 }
