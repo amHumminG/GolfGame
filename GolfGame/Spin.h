@@ -7,12 +7,11 @@
 #define AREA PI * pow(RADIUS, 2) // Ball area pi*r^2
 #define DENSITY 1.22f // Air density
 #define MASS 0.0459f // Ball mass
+#define yAxis DirectX::XMVECTOR({0.0f, 1.0f, 0.0f})
 
 class Spin
 {
 private:
-	DirectX::XMVECTOR yAxis = { 0.0f, 1.0f, 0.0f };
-
 	float MagnusLiftCoefficient(float omega, float velocityLength);
 
 public:
