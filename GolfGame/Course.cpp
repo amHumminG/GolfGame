@@ -27,12 +27,12 @@ void Course::GenerateHole(int minDistanceToHole, int maxDistanceToHole, float ho
 	SetPar(CalculatePar(parIncrement));
 }
 
-Course::Course(DirectX::XMINT3 bounds)
+Course::Course(DirectX::XMINT2 bounds)
 {
 	initialize(bounds);
 }
 
-void Course::initialize(DirectX::XMINT3 initialBounds)
+void Course::initialize(DirectX::XMINT2 initialBounds)
 {
 	SetBounds(initialBounds);
 	GenerateHole(100, 400, 1, 50);
@@ -50,7 +50,7 @@ void Course::RandomizeHoleLocation(int min, int max)
 	hole.location.z = locationZ;
 }
 
-DirectX::XMINT3 Course::GetBounds()
+DirectX::XMINT2 Course::GetBounds()
 {
 	return this->bounds;
 }
@@ -70,7 +70,7 @@ unsigned int Course::GetPar()
 	return this->par;
 }
 
-void Course::SetBounds(DirectX::XMINT3 NewBounds)
+void Course::SetBounds(DirectX::XMINT2 NewBounds)
 {
 	this->bounds = NewBounds;
 }
