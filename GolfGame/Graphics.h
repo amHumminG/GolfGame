@@ -9,18 +9,22 @@ private:
 	sf::RenderWindow window;
 	sf::Event event; // An event to check if the window closes
 
-	unsigned int wWidth;
-	unsigned int wHeight;
+	unsigned int wWidth = 960;
+	unsigned int wHeight = 960;
+	void DrawTextAndImage(const sf::String imagePath, const sf::String fontPath, const sf::String mainText, const sf::String subText);
+
 
 public:
 	Graphics() = default;
 	//Graphics();
 
-	void Initialize(unsigned int width, unsigned int height);
+	void Initialize();
 	void Run();
-	void DrawTitleScreen();
-	void DrawGameOver();
 	void DrawTrajectory(DirectX::XMFLOAT3 position);
+
+	void DrawTitleScreen();
+	void DrawOutOfBoundsScreen();
+	void DrawVictoryScreen();
 
 	void CloseWindow();
 };
