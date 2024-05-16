@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Graphics.h"
+
 #include "InputHandler.h"
 #include "OutputHandler.h"
 
@@ -9,7 +11,8 @@
 class Game
 {
 private:
-	
+	Graphics graphics;
+
 	InputHandler input;
 	OutputHandler output;
 

@@ -110,8 +110,11 @@ void Game::Swing(unsigned int strokes)
 		// Set ball velocity and calculate its projectile
 		this->ball.CalculateProjectile1();
 		
+		DirectX::XMFLOAT3 ballPos = this->ball.GetPosition();
+		this->graphics.DrawTrajectory(ballPos, strokes - 1, this->course.GetHoleLocation());
+		
 		// Print ball information
-		this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
+		this->output.BallInfo(this->ball.GetTime(), ballPos, this->ball.GetVelocity());
 		ballHit = true;
 	}
 	
@@ -170,6 +173,8 @@ void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, 
 	this->ball.SetUpdateFrequency(updateFrequency);
 
 	this->maxBallSpeed = maxSpeed;
+
+	this->graphics.Initialize();
 }
 
 void Game::EndGame(unsigned int strokes, unsigned int par)
@@ -242,21 +247,29 @@ void Game::Run()
 
 	bool inBounds = true;
 
-	while (!this->BallInHole())
+	while (graphics.window.isOpen())
 	{
-		Swing(strokes);
-		strokes++;
+		this->graphics.CloseWindow();
+		//this->graphics.DrawFlag(this->course.GetHoleLocation());
+		this->graphics.DrawTrajectory({ 0.0f, 0.0f, 0.0f }, strokes - 1, this->course.GetHoleLocation());
 
-		inBounds = this->BallInBounds();
-		if (!inBounds)
+		while (!this->BallInHole())
 		{
-			this->output.BallOutOfBounds();
+			Swing(strokes);
+			strokes++;
+
+			inBounds = this->BallInBounds();
+			if (!inBounds)
+			{
+				this->output.BallOutOfBounds();
+				break;
+			}
+		}
+
+		if (inBounds) // Ball is in hole
+		{
+			EndGame(strokes, this->course.GetPar());
 			break;
 		}
-	}
-
-	if (inBounds)
-	{
-		EndGame(strokes, this->course.GetPar());
 	}
 }
