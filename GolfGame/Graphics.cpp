@@ -33,6 +33,7 @@ void Graphics::DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorInde
 	line.setFillColor(sf::Color::White);
 	line.setPosition(sf::Vector2f(0, 960 / 2));
 
+	this->window.clear(this->backgroundColor);
 	this->window.draw(circleX);
 	this->window.draw(circleZ);
 	this->window.draw(line);

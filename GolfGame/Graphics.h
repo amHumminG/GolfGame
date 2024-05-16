@@ -7,12 +7,12 @@ class Graphics
 {
 private:
 	sf::Event event; // An event to check if the window closes
-	sf::Color ballColors[7] = { sf::Color::Red, sf::Color(255, 128, 0), sf::Color::Yellow, sf::Color::Green,
-		sf::Color(0, 255, 255), sf::Color::Blue, sf::Color(255, 0, 255) };
 
 	unsigned int wWidth = 960;
 	unsigned int wHeight = 960;
 
+	sf::Color ballColors[7] = { sf::Color::Red, sf::Color(255, 128, 0), sf::Color::Yellow, sf::Color::Green,
+		sf::Color(0, 255, 255), sf::Color::Blue, sf::Color(255, 0, 255) };
 	sf::Color textColor = sf::Color::White;
 	sf::Color backgroundColor = sf::Color::Black;
 
@@ -22,7 +22,6 @@ public:
 	sf::RenderWindow window;
 
 	Graphics() = default;
-	//Graphics();
 
 	void Initialize();
 
