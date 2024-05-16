@@ -53,7 +53,7 @@ public:
 	);
 
 	void Run();
-	void RepeatPlay();
+	bool RepeatPlay();
 
 	void RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind);
 };
