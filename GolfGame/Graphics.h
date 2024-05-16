@@ -6,21 +6,24 @@
 class Graphics
 {
 private:
-	sf::RenderWindow window;
 	sf::Event event; // An event to check if the window closes
+	sf::Color ballColors[7] = { sf::Color::Red, sf::Color(255, 128, 0), sf::Color::Yellow, sf::Color::Green,
+		sf::Color(0, 255, 255), sf::Color::Blue, sf::Color(255, 0, 255) };
 
-	unsigned int wWidth;
-	unsigned int wHeight;
+	unsigned int wWidth = 960;
+	unsigned int wHeight = 960;
 
 public:
+	sf::RenderWindow window;
+
 	Graphics() = default;
 	//Graphics();
 
-	void Initialize(unsigned int width, unsigned int height);
-	void Run();
+	void Initialize();
 	void DrawTitleScreen();
 	void DrawGameOver();
-	void DrawTrajectory(DirectX::XMFLOAT3 position);
+	void DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorIndex, DirectX::XMINT3 holePos);
+	void DrawFlag(DirectX::XMINT3 position);
 
 	void CloseWindow();
 };
