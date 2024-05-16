@@ -13,6 +13,9 @@ void Graphics::Initialize()
 {
 	this->window.create(sf::VideoMode(this->wWidth, this->wHeight), "Golf Game");
 	this->window.setPosition(sf::Vector2i(this->wWidth - 10, 0));
+
+	this->renderTexture.create(wWidth, wHeight);
+	this->renderTextureTrajectory.create(wWidth, wHeight);
 }
 
 void Graphics::DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorIndex, DirectX::XMINT3 holePos)
@@ -33,13 +36,22 @@ void Graphics::DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorInde
 	line.setFillColor(sf::Color::White);
 	line.setPosition(sf::Vector2f(0, 960 / 2));
 
-	this->window.draw(circleX);
-	this->window.draw(circleZ);
-	this->window.draw(line);
-	
-	this->DrawFlag(holePos);
+	//this->window.draw(circleX);
+	//this->window.draw(circleZ);
+	//this->window.draw(line);
 
-	this->window.display();
+	this->renderTextureTrajectory.draw(circleX);
+	this->renderTextureTrajectory.draw(circleZ);
+	this->renderTextureTrajectory.draw(line);
+	this->DrawFlag(holePos);
+	this->renderTextureTrajectory.display();
+
+
+	this->windowSprite.setTexture(this->renderTextureTrajectory.getTexture());
+
+	this->window.clear(this->backgroundColor);
+	this->window.draw(this->windowSprite);
+	this->window.display();	
 }
 
 void Graphics::DrawFlag(DirectX::XMINT3 holePos)
@@ -67,10 +79,15 @@ void Graphics::DrawFlag(DirectX::XMINT3 holePos)
 	flagX.setRotation(rotate);
 	flagZ.setRotation(rotate);
 
-	this->window.draw(flagPoleX);
-	this->window.draw(flagPoleZ);
-	this->window.draw(flagX);
-	this->window.draw(flagZ);
+	//this->window.draw(flagPoleX);
+	//this->window.draw(flagPoleZ);
+	//this->window.draw(flagX);
+	//this->window.draw(flagZ);
+
+	this->renderTextureTrajectory.draw(flagPoleX);
+	this->renderTextureTrajectory.draw(flagPoleZ);
+	this->renderTextureTrajectory.draw(flagX);
+	this->renderTextureTrajectory.draw(flagZ);
 }
 
 void Graphics::DrawTextAndImage(const sf::String imagePath, const sf::String fontPath, const sf::String mainText, const sf::String subText)
@@ -119,11 +136,16 @@ void Graphics::DrawTextAndImage(const sf::String imagePath, const sf::String fon
 
 
 	// DRAW
-	this->window.clear(this->backgroundColor);
-	this->window.draw(sprite);
-	this->window.draw(titleText);
-	this->window.draw(infoText);
+	this->renderTexture.clear(this->backgroundColor);
+	this->renderTexture.draw(sprite);
+	this->renderTexture.draw(titleText);
+	this->renderTexture.draw(infoText);
 
+	this->renderTexture.display();
+
+	this->window.clear(this->backgroundColor);
+	this->windowSprite.setTexture(this->renderTexture.getTexture());
+	this->window.draw(this->windowSprite);
 	this->window.display();
 }
 
@@ -140,4 +162,9 @@ void Graphics::DrawOutOfBoundsScreen()
 void Graphics::DrawVictoryScreen()
 {
 	this->DrawTextAndImage("Resources/victory.png", "Resources/Akira.otf", "Victory", "Good job!");
+}
+
+void Graphics::Reset()
+{
+	this->renderTextureTrajectory.clear(this->backgroundColor);
 }

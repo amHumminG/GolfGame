@@ -16,15 +16,20 @@ private:
 	sf::Color textColor = sf::Color::White;
 	sf::Color backgroundColor = sf::Color::Black;
 
+	sf::RenderTexture renderTexture;
+	sf::RenderTexture renderTextureTrajectory;
+	sf::Sprite windowSprite;
+
 	void DrawTextAndImage(const sf::String imagePath, const sf::String fontPath, const sf::String mainText, const sf::String subText);
 
 public:
 	sf::RenderWindow window;
 
 	Graphics() = default;
-	//Graphics();
+	~Graphics() = default;
 
 	void Initialize();
+	void Reset(); // clears trajectory RenderTexture for a new game
 
 	void DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorIndex, DirectX::XMINT3 holePos);
 	void DrawFlag(DirectX::XMINT3 position);
