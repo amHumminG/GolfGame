@@ -25,9 +25,7 @@ public:
 	//Graphics();
 
 	void Initialize();
-  
-	void DrawTitleScreen();
-	void DrawGameOver();
+
 	void DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorIndex, DirectX::XMINT3 holePos);
 	void DrawFlag(DirectX::XMINT3 position);
 	void DrawTitleScreen();
