@@ -244,6 +244,7 @@ void Game::RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind)
 
 void Game::Run()
 {
+	this->graphics.Reset();
 	StartGame();
 	unsigned int strokes = 1;
 
