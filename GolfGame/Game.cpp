@@ -49,6 +49,7 @@ void Game::GetSettings()
 
 void Game::StartGame()
 {
+	graphics.DrawTitleScreen();
 	this->output.GameStartMessage();
 	SetupGame();
 	GetSettings();
@@ -111,6 +112,7 @@ void Game::Swing(unsigned int strokes)
 		this->ball.CalculateProjectile1();
 		
 		DirectX::XMFLOAT3 ballPos = this->ball.GetPosition();
+		//this->graphics.window.clear(sf::Color::Black);
 		this->graphics.DrawTrajectory(ballPos, strokes - 1, this->course.GetHoleLocation());
 		
 		// Print ball information
@@ -250,7 +252,6 @@ void Game::Run()
 	while (graphics.window.isOpen())
 	{
 		this->graphics.CloseWindow();
-		//this->graphics.DrawFlag(this->course.GetHoleLocation());
 		this->graphics.DrawTrajectory({ 0.0f, 0.0f, 0.0f }, strokes - 1, this->course.GetHoleLocation());
 
 		while (!this->BallInHole())
@@ -261,6 +262,7 @@ void Game::Run()
 			inBounds = this->BallInBounds();
 			if (!inBounds)
 			{
+				this->graphics.DrawOutOfBoundsScreen();
 				this->output.BallOutOfBounds();
 				break;
 			}
@@ -268,6 +270,7 @@ void Game::Run()
 
 		if (inBounds) // Ball is in hole
 		{
+			this->graphics.DrawVictoryScreen();
 			EndGame(strokes, this->course.GetPar());
 			break;
 		}
