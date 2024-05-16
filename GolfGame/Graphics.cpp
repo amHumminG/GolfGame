@@ -40,10 +40,6 @@ void Graphics::DrawTrajectory(DirectX::XMFLOAT3 position)
 
 void Graphics::DrawTextAndImage(const sf::String imagePath, const sf::String fontPath, const sf::String mainText, const sf::String subText)
 {
-	sf::Color textColor = sf::Color::White;
-	sf::Color backgroundColor = sf::Color::Black;
-
-
 	// IMAGE
 	sf::Texture texture;
 	if (!texture.loadFromFile(imagePath))
@@ -69,7 +65,7 @@ void Graphics::DrawTextAndImage(const sf::String imagePath, const sf::String fon
 	sf::Text titleText;
 	titleText.setFont(font);
 	titleText.setString(mainText);
-	titleText.setFillColor(textColor);
+	titleText.setFillColor(this->textColor);
 	titleText.setStyle(sf::Text::Bold);
 	titleText.setCharacterSize(80);
 	xPos = 960 / 2 - titleText.getLocalBounds().width / 2;
@@ -79,7 +75,7 @@ void Graphics::DrawTextAndImage(const sf::String imagePath, const sf::String fon
 	sf::Text infoText;
 	infoText.setFont(font);
 	infoText.setString(subText);
-	infoText.setFillColor(textColor);
+	infoText.setFillColor(this->textColor);
 	infoText.setStyle(sf::Text::Italic);
 	infoText.setCharacterSize(20);
 	xPos = 960 / 2 - infoText.getLocalBounds().width / 2;
@@ -88,7 +84,7 @@ void Graphics::DrawTextAndImage(const sf::String imagePath, const sf::String fon
 
 
 	// DRAW
-	this->window.clear(backgroundColor);
+	this->window.clear(this->backgroundColor);
 	this->window.draw(sprite);
 	this->window.draw(titleText);
 	this->window.draw(infoText);
