@@ -90,19 +90,6 @@ void Game::Swing(unsigned int strokes)
 		}
 	}
 
-	float spinRate;
-	this->output.AskForSpinRate();
-	validInput = false;
-	while (!validInput)
-	{
-		validInput = this->input.GetFloatInRange(spinRate, 0.0f, 6000.0f);	// get spin rate in rpm
-		if (!validInput)
-			this->output.InvalidInputSpinRate();
-	}
-
-	// Set the spin rate in rad/s
-	this->ball.SetAngularVelocity((spinRate / 60.0f) * 2 * DirectX::XM_PI);
-
 	bool ballHit = false;
 	this->ball.SetVelocity(v0);
 	this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
@@ -140,13 +127,11 @@ bool Game::BallInHole()
 bool Game::BallInBounds()
 {
 	DirectX::XMFLOAT3 ballPos = ball.GetPosition();
-	DirectX::XMINT3 bounds = this->course.GetBounds();
-	
-	if (ballPos.x > bounds.x || ballPos.x < -bounds.x)
+	DirectX::XMINT2 bounds = this->course.GetBounds();
+	//z == y
+	if (ballPos.x < bounds.x || ballPos.x > bounds.y)
 		return false;	
-	if (ballPos.y > bounds.y || ballPos.y < -bounds.y)
-		return false;	
-	if (ballPos.z > bounds.z || ballPos.z < -bounds.z)
+	if (ballPos.z < bounds.x || ballPos.z > bounds.y) 
 		return false;
 	return true;
 }
@@ -156,12 +141,12 @@ Game::Game()
 	Initialize();
 }
 
-Game::Game(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency)
+Game::Game(DirectX::XMINT2 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency)
 {
 	Initialize(courseBounds, startPos, holeRadius, maxSpeed, updateFrequency);
 }
 
-void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency)
+void Game::Initialize(DirectX::XMINT2 courseBounds, DirectX::XMFLOAT3 startPos, float holeRadius, unsigned int maxSpeed, float updateFrequency)
 {
 	this->input = InputHandler();
 	this->output = OutputHandler();

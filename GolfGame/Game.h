@@ -35,7 +35,7 @@ public:
 	Game();
 	Game
 	(
-		DirectX::XMINT3 courseBounds = { 1000, 0, 1000 },
+		DirectX::XMINT2 courseBounds = { 1000, 1000 },
 		DirectX::XMFLOAT3 startPos = { 0.0f, 0.0f, 0.0f },
 		float holeRadius = 1.0f,
 		unsigned int maxSpeed = 50,
@@ -45,7 +45,7 @@ public:
 
 	void Initialize
 	(
-		DirectX::XMINT3 courseBounds = { 1000, 0, 1000 }, 
+		DirectX::XMINT2 courseBounds = { 1000, 1000 }, 
 		DirectX::XMFLOAT3 startPos = { 0.0f, 0.0f, 0.0f },
 		float holeRadius = 1.0f,
 		unsigned int maxSpeed = 50, 
