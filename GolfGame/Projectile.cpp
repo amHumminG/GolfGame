@@ -15,12 +15,12 @@ DirectX::XMFLOAT3 Projectile::GetTotalForce(DirectX::XMFLOAT3 u)
 	DirectX::XMFLOAT3 Fd = this->drag.GetDragForce(u, this->gravity); // Drag force
 	DirectX::XMFLOAT3 Fm = this->spin.GetMagnusForce(u, this->angularVelocity); // Magnus force
 
-	//DirectX::XMVECTOR FgVec = DirectX::XMVectorScale({ 0.0f, -1.0f, 0.0f }, MASS * this->gravity);
 	DirectX::XMVECTOR FdVec = DirectX::XMLoadFloat3(&Fd);
 	DirectX::XMVECTOR FmVec = DirectX::XMLoadFloat3(&Fm);
+	DirectX::XMVECTOR FgVec = DirectX::XMVectorScale({ 0.0f, -1.0f, 0.0f }, MASS * this->gravity);
 
 	DirectX::XMVECTOR totalForceVec = DirectX::XMVectorAdd(FdVec, FmVec); // Sum of all forces, Fd + Fm
-	//totalForceVec = DirectX::XMVectorAdd(totalForceVec, FgVec);
+	totalForceVec = DirectX::XMVectorAdd(totalForceVec, FgVec);
 	
 	DirectX::XMFLOAT3 totalForce;
 	DirectX::XMStoreFloat3(&totalForce, totalForceVec);
@@ -29,13 +29,10 @@ DirectX::XMFLOAT3 Projectile::GetTotalForce(DirectX::XMFLOAT3 u)
 
 void Projectile::ApplyForces(DirectX::XMFLOAT3 u, DirectX::XMFLOAT3 totalForce)
 {
-	float totalForceLength = this->GetVectorLength(totalForce);
-	float totalVelocity = this->GetVectorLength(u);
-
 	// Accelerations
-	float ax = - (totalForceLength * u.x) / (MASS * totalVelocity);
-	float ay = - gravity - (totalForceLength * u.y) / (MASS * totalVelocity);
-	float az = - (totalForceLength * u.z) / (MASS * totalVelocity);
+	float ax = totalForce.x / MASS;
+	float ay = totalForce.y / MASS;
+	float az = totalForce.z / MASS;
 
 	// New velocities
 	v.x = v.x + ax * iteration;
@@ -50,12 +47,12 @@ void Projectile::ApplyForces(DirectX::XMFLOAT3 u, DirectX::XMFLOAT3 totalForce)
 	// Next iteration
 	DirectX::XMFLOAT3 newV;
 	DirectX::XMFLOAT3 newPos;
-	float vTotal = this->GetVectorLength(this->v);
-	float Cd = this->drag.GetDragCoefficient();
+	DirectX::XMFLOAT3 newU = this->wind.GetDragVelocity(this->v);
+	totalForce = this->GetTotalForce(newU);
 
-	ax = - (totalForceLength * u.x) / (MASS * totalVelocity);
-	ay = - gravity - (totalForceLength * u.y) / (MASS * totalVelocity);
-	az = - (totalForceLength * u.z) / (MASS * totalVelocity);
+	ax = totalForce.x / MASS;
+	ay = totalForce.y / MASS;
+	az = totalForce.z / MASS;
 
 	newV.x = v.x + ax * iteration;
 	newV.y = v.y + ay * iteration;
