@@ -4,7 +4,7 @@
 
 int main()
 {
-	Game* game = new Game({1000, 0, 1000}, {0, 0, 0}, 1.0f, 65, 0.1f);
+	Game* game = new Game({-200, 720}, {0, 0, 0}, 1.0f, 65, 0.05f);
 
 	game->Run();
 	while (game->RepeatPlay())
