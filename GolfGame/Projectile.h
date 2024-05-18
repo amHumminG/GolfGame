@@ -68,4 +68,5 @@ public:
 	float GetGravity();
 	bool GetAirDrag();
 	DirectX::XMFLOAT3 GetWindSpeed();
+	float GetIteration();
 };

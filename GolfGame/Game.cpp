@@ -90,9 +90,23 @@ void Game::Swing(unsigned int strokes)
 		}
 	}
 
+	float spinRate;
+	this->output.AskForSpinRate();
+	validInput = false;
+	while (!validInput)
+	{
+		validInput = this->input.GetFloatInRange(spinRate, 0.0f, 6000.0f);	// get spin rate in rpm
+		if (!validInput)
+			this->output.InvalidInputSpinRate();
+	}
+
+	// Set the spin rate in rad/s
+	this->ball.SetAngularVelocity((spinRate / 60.0f) * 2 * DirectX::XM_PI);
+
 	bool ballHit = false;
 	this->ball.SetVelocity(v0);
 	this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
+	float time = this->ball.GetIteration() * 1000;
 	while ((this->ball.GetPosition().y > 0.0f || !ballHit) && graphics.window.isOpen())
 	{
 		this->graphics.CloseWindow();
@@ -105,6 +119,8 @@ void Game::Swing(unsigned int strokes)
 		// Print ball information
 		this->output.BallInfo(this->ball.GetTime(), ballPos, this->ball.GetVelocity());
 		ballHit = true;
+
+		//std::this_thread::sleep_for(std::chrono::milliseconds((long long)time));
 	}
 	
 	// Updates the ball start position

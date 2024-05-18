@@ -275,3 +275,8 @@ DirectX::XMFLOAT3 Projectile::GetWindSpeed()
 {
 	return this->wind.GetSpeed();
 }
+
+float Projectile::GetIteration()
+{
+	return this->iteration;
+}
