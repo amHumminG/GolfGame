@@ -49,6 +49,7 @@ void Game::GetSettings()
 
 void Game::StartGame()
 {
+	graphics.DrawTitleScreen();
 	this->output.GameStartMessage();
 	SetupGame();
 	GetSettings();
@@ -105,13 +106,17 @@ void Game::Swing(unsigned int strokes)
 	bool ballHit = false;
 	this->ball.SetVelocity(v0);
 	this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
-	while (this->ball.GetPosition().y > 0.0f || !ballHit)
+	while ((this->ball.GetPosition().y > 0.0f || !ballHit) && graphics.window.isOpen())
 	{
+		this->graphics.CloseWindow();
 		// Set ball velocity and calculate its projectile
 		this->ball.CalculateProjectile1();
 		
+		DirectX::XMFLOAT3 ballPos = this->ball.GetPosition();
+		this->graphics.DrawTrajectory(ballPos, strokes - 1, this->course.GetHoleLocation());
+		
 		// Print ball information
-		this->output.BallInfo(this->ball.GetTime(), this->ball.GetPosition(), this->ball.GetVelocity());
+		this->output.BallInfo(this->ball.GetTime(), ballPos, this->ball.GetVelocity());
 		ballHit = true;
 	}
 	
@@ -170,6 +175,8 @@ void Game::Initialize(DirectX::XMINT3 courseBounds, DirectX::XMFLOAT3 startPos, 
 	this->ball.SetUpdateFrequency(updateFrequency);
 
 	this->maxBallSpeed = maxSpeed;
+
+	this->graphics.Initialize();
 }
 
 void Game::EndGame(unsigned int strokes, unsigned int par)
@@ -177,7 +184,7 @@ void Game::EndGame(unsigned int strokes, unsigned int par)
 	this->output.GameEndMessage(strokes, par);
 }
 
-void Game::RepeatPlay()
+bool Game::RepeatPlay()
 {
 	this->output.AskForReplay();
 	bool replay;
@@ -197,6 +204,7 @@ void Game::RepeatPlay()
 	{
 		this->output.ExitGameMessage();
 	}
+	return replay;
 }
 
 void Game::RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind)
@@ -236,11 +244,14 @@ void Game::RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind)
 
 void Game::Run()
 {
+	this->graphics.Reset();
 	StartGame();
 	unsigned int strokes = 1;
-	this->course.GetPar();
 
 	bool inBounds = true;
+
+	this->graphics.CloseWindow();
+	this->graphics.DrawTrajectory({ 0.0f, 0.0f, 0.0f }, strokes - 1, this->course.GetHoleLocation());
 
 	while (!this->BallInHole())
 	{
@@ -250,13 +261,15 @@ void Game::Run()
 		inBounds = this->BallInBounds();
 		if (!inBounds)
 		{
+			this->graphics.DrawOutOfBoundsScreen();
 			this->output.BallOutOfBounds();
 			break;
 		}
 	}
 
-	if (inBounds)
+	if (inBounds) // Ball is in hole
 	{
+		this->graphics.DrawVictoryScreen();
 		EndGame(strokes, this->course.GetPar());
 	}
 }

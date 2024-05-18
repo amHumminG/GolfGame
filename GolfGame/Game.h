@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Graphics.h"
+
 #include "InputHandler.h"
 #include "OutputHandler.h"
 
@@ -9,7 +11,8 @@
 class Game
 {
 private:
-	
+	Graphics graphics;
+
 	InputHandler input;
 	OutputHandler output;
 
@@ -50,7 +53,7 @@ public:
 	);
 
 	void Run();
-	void RepeatPlay();
+	bool RepeatPlay();
 
 	void RunDebug(Gravity gravity, bool airDrag, DirectX::XMFLOAT3 wind);
 };
