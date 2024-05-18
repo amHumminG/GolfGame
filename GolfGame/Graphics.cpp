@@ -1,14 +1,5 @@
 #include "Graphics.h"
 
-void Graphics::CloseWindow()
-{
-	while (this->window.pollEvent(this->event))
-	{
-		if (this->event.type == sf::Event::Closed)
-			this->window.close();
-	}
-}
-
 void Graphics::Initialize()
 {
 	this->window.create(sf::VideoMode(this->wWidth, this->wHeight), "Golf Game");
@@ -16,6 +7,11 @@ void Graphics::Initialize()
 
 	this->renderTexture.create(wWidth, wHeight);
 	this->renderTextureTrajectory.create(wWidth, wHeight);
+}
+
+void Graphics::Reset()
+{
+	this->renderTextureTrajectory.clear(this->backgroundColor);
 }
 
 void Graphics::DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorIndex, DirectX::XMINT3 holePos)
@@ -29,19 +25,28 @@ void Graphics::DrawTrajectory(DirectX::XMFLOAT3 position, unsigned int colorInde
 	unsigned int circleOffset = 200;
 	sf::Vector2f circlePosX(circleOffset + position.x, this->wWidth / 2 - 2 * circleRadius - position.y);
 	circleX.setPosition(circlePosX);
-	sf::Vector2f circlePosZ(circleOffset + position.z, this->wHeight - 2 * circleRadius - position.y);
-	circleZ.setPosition(circlePosZ);
 
-	sf::RectangleShape line(sf::Vector2f(this->wHeight, 1)); // Horisontal line
+	int yZ = this->wHeight - 2 * circleRadius - position.y;
+	if (yZ > this->wHeight / 2) // If circleZ gets above the horizontal line, don't draw it
+	{
+		sf::Vector2f circlePosZ(circleOffset + position.z, yZ);
+		circleZ.setPosition(circlePosZ);
+	}
+	else
+	{
+		sf::Vector2f circlePosZ(-circleRadius * 2, -circleRadius * 2);
+		circleZ.setPosition(circlePosZ);
+	}
+
+	sf::RectangleShape line(sf::Vector2f(this->wHeight, 1)); // Horizontal line
 	line.setFillColor(sf::Color::White);
-	line.setPosition(sf::Vector2f(0, 960 / 2));
+	line.setPosition(sf::Vector2f(0, this->wHeight / 2));
 
 	this->renderTextureTrajectory.draw(circleX);
 	this->renderTextureTrajectory.draw(circleZ);
 	this->renderTextureTrajectory.draw(line);
 	this->DrawFlag(holePos);
 	this->renderTextureTrajectory.display();
-
 
 	this->windowSprite.setTexture(this->renderTextureTrajectory.getTexture());
 
@@ -74,11 +79,6 @@ void Graphics::DrawFlag(DirectX::XMINT3 holePos)
 	int rotate = 90;
 	flagX.setRotation(rotate);
 	flagZ.setRotation(rotate);
-
-	//this->window.draw(flagPoleX);
-	//this->window.draw(flagPoleZ);
-	//this->window.draw(flagX);
-	//this->window.draw(flagZ);
 
 	this->renderTextureTrajectory.draw(flagPoleX);
 	this->renderTextureTrajectory.draw(flagPoleZ);
@@ -160,7 +160,11 @@ void Graphics::DrawVictoryScreen()
 	this->DrawTextAndImage("Resources/victory.png", "Resources/Akira.otf", "Victory", "Good job!");
 }
 
-void Graphics::Reset()
+void Graphics::CloseWindow()
 {
-	this->renderTextureTrajectory.clear(this->backgroundColor);
+	while (this->window.pollEvent(this->event))
+	{
+		if (this->event.type == sf::Event::Closed)
+			this->window.close();
+	}
 }
